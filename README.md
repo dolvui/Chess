@@ -19,3 +19,18 @@ the final goal is to produce a trained RN
 
 that use both of the board and the minmax to play as accurate
 as possible
+
+
+run :  make -B && ./chess
+
+current output:
+
+lets go
+|r||k||b||q||k||b||c||r|
+|p||p||p||p||p||p||p||p|
+| || || || || || || || |
+| || || || || || || || |
+| || || || || || || || |
+| || || || || || || || |
+|P||P||P||P||P||P||P||P|
+|R||K||B||Q||K||B||C||R|
