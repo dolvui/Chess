@@ -1,6 +1,7 @@
 #pragma once
 
-#include  <list>
+#include <array>
+#include <memory>
 #include "../piece/piece.hh"
 #include "../player/player.hh"
 
@@ -9,9 +10,10 @@ namespace game
 class Board {
 public:
     Board();
-    void play();
+    void move(int start,int end);
     void print_board();
+
   private:
-    std::list<game::Piece*>* board_;
+    std::array<Piece*,64> board_;
 };
 } /* game */
