@@ -14,6 +14,6 @@ namespace game {
 
       std::cin>> s;
       std::cin >> e;
-      board_.move(s,e);
+//      board_.move(s,e);
     }
 }
