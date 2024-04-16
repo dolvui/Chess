@@ -11,7 +11,6 @@
 #include "game/player/player.hh"
 
 int main() {
-    std::cout << "lets go" << std::endl;
     game::Board b = game::Board();
 
     std::string name1;
