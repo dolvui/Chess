@@ -8,13 +8,27 @@
 #include "game/piece/rook.hh"
 #include "game/piece/kig.hh"
 #include "game/piece/pawn.hh"
+#include "game/player/player.hh"
 
 int main() {
     std::cout << "lets go" << std::endl;
     game::Board b = game::Board();
-    b.print_board();
 
-    game::Game G = game::Game(b);
+    std::string name1;
+    std::string name2;
+
+    std::cout << "\nwhite name: ";
+    std::cin >> name1;
+
+    std::cout << "\nblack name: ";
+    std::cin >> name2;
+
+    game::Player white_player = game::Player(name1);
+    game::Player black_player = game::Player(name2);
+
+    game::Game G = game::Game(b, white_player, black_player);
+
+    b.print_board();
     G.play();
     return 0;
 }

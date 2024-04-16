@@ -1,8 +1,11 @@
+#include "player.hh"
+#include <iostream>
+
 namespace game
 {
-class Player{
-public:
-    Player() = default;
-    ~Player() = default;
-};
+    Player::Player(std::string name) : name_(name) {}
+
+    std::string Player::get_name() {
+        return name_;
+    }
 } /* game */

@@ -17,10 +17,10 @@ Pawn::Pawn(char piece, bool white, int x, int y, int value) {
       auto rep = std::list<std::pair<int, int>>();
 
       if (white_) {
-          rep.push_front(std::pair<int, int>(x_ + 1, y_));
-          rep.push_front(std::pair<int, int>(x_ + 2, y_));
-          rep.push_front(std::pair<int, int>(x_ + 1, y_ + 1));
-          rep.push_front(std::pair<int, int>(x_ + 1, y_ + 1));
+          rep.push_front(std::pair<int, int>(x_ , y_ - 1));
+          rep.push_front(std::pair<int, int>(x_ , y_ - 2));
+          // rep.push_front(std::pair<int, int>(x_ + 1, y_ + 1));
+          // rep.push_front(std::pair<int, int>(x_ + 1, y_ + 1));
       }
       else {
           rep.push_front(std::pair<int, int>(x_ - 1, y_));

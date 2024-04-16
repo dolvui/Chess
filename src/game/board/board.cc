@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cctype>
 #include <iostream>
 #include <list>
 #include <memory>
@@ -50,7 +51,7 @@ Board::Board() : board_(std::array<Piece *, 64>()) {
     }
 
     for (int i = 0; i < 8; i++) {
-        auto p_w = new game::Pawn('P', false, i, 6, 1);
+        auto p_w = new game::Pawn('P', true, i, 6, 1);
         board_.at(i+48) = p_w;
     }
 
@@ -96,20 +97,41 @@ Board::Board() : board_(std::array<Piece *, 64>()) {
       board_.at(start) = nullptr;
    }
 
-   int Board::compute_move(std::string move_not) {
+    int Board::compute_move(std::string move_not,bool white) {
        std::string piece;
        std::string destination;
 
        if (islower(move_not[0])) {
-           piece = "p";
+           piece = "P";
            destination = move_not.substr(0, 2);
        } else {
            piece = move_not.substr(0, 1);
            destination = move_not.substr(1, 2);
        }
-       std::cout << "P:" << piece << " dest:" << destination << "\n\n";
-       //return make_pair(piece, destination);
-//       move(48+4,7*4+4);
+       int dest = (destination[0] - 'a') * 8 + destination[1] - '1';
+       dest++;
+       int start = find_start(piece[0], white, dest);
+       std::cout << "start: " << start << " and dest: " << dest << "\n";
+       move(start,dest);
        return 0;
     }
+
+    int Board::find_start(char piece, bool white, int dest) {
+        if (!white)
+            piece = std::tolower(piece);
+        for (int i = 0 ; i < 64 ; i++) {
+            if (board_.at(i) && board_.at(i)->get_piece() == piece) {
+            auto l = board_.at(i)->compute_move();
+            for (auto m : l) {
+//                std::cout << "from " << i << " to " << m.second*8 + m.first << "\n";
+              if (m.second*8 + m.first == dest)
+                  return i;
+            }
+           }
+        }
+        return -1;
+    }
+   game::Piece* Board::get_piece(int i) {
+       return board_.at(i);
+   }
 } /* game */
