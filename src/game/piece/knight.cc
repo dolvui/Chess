@@ -5,8 +5,13 @@
 
 namespace game {
 
-    Knight::Knight(char piece, bool white, int x, int y, int value)
-    : piece_(piece) , white_(white) , x_(x) , y_(y) , value_(value){}
+Knight::Knight(char piece, bool white, int x, int y, int value) {
+    this->piece_ = piece;
+    this->white_ = white;
+    this->x_ = x;
+    this->y_ = y;
+    this->value_ = value;
+}
 
     std::list<std::pair<int, int>> Knight::compute_move() {
         auto rep = std::list<std::pair<int, int>>();

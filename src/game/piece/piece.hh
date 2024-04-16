@@ -7,10 +7,9 @@ namespace game
 {
 class Piece {
 public:
-    virtual std::list<std::pair<int, int>> compute_move(){}
-    Piece(char piece, bool white, int x, int y, int value);
-    Piece() = default;
-    ~Piece() = default;
+    virtual std::list<std::pair<int, int>> compute_move() = 0;
+    // Piece(char piece, bool white, int x, int y, int value);
+    //Piece() = default;
     char get_piece();
     bool is_white();
     int get_x();
@@ -19,7 +18,7 @@ public:
 
     void set_x(int x);
     void set_y(int y);
-//protected:
+protected:
     char piece_;
     bool white_;
     int x_;

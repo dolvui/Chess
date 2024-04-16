@@ -4,78 +4,112 @@
 #include <memory>
 #include <utility>
 #include "../piece/piece.hh"
+
+#include "../piece/bishop.hh"
+#include "../piece/kig.hh"
+#include "../piece/rook.hh"
+#include "../piece/queen.hh"
+#include "../piece/pawn.hh"
+#include "../piece/knight.hh"
+
 #include "../player/player.hh"
 #include "board.hh"
-#include "../piece/knight.hh"
 
 namespace game
 {
-    Board::Board() : board_(std::array<Piece*,64>()) {
+Board::Board() : board_(std::array<Piece *, 64>()) {
+    auto p1 = new game::Rook('r', false, 0, 0, 5);
+    board_.at(0) = p1;
 
-//         auto p = new game::Piece('R', true);
-//         board_.at(0) = p;
-//      p = new game::Piece('C', true);
-//      board_.at(1) = p;
-//      p = new game::Piece('B', true);
-//      board_.at(2) = p;
-//      p = new game::Knight();
-//      p->set_x(4);
-//      p->set_y(4);
-//      auto l = p->compute_move();
-//      std::cout << l.begin()->first;
-//      board_.at(3) = p;
-//      p = new game::Piece('Q', true);
-//      board_.at(4) = p;
-//      p = new game::Piece('B', true);
-//      board_.at(5) = p;
-//      p = new game::Piece('C', true);
-//      board_.at(6) = p;
-//      p = new game::Piece('R', true);
-//      board_.at(7) = p;
+    auto p2 = new game::Knight('n', false, 1, 0, 3);
+    board_.at(1) = p2;
 
-//     for (int i = 0; i < 8; i++) {
-//       auto p = new game::Piece('P', true);
-//       board_.at(8+i) = p;
-//     }
+    auto p3 = new game::Bishop('b', false, 2, 0, 3);
+    board_.at(2) = p3;
 
-//     for (int i = 0; i < 8; i++) {
-//       auto p = new game::Piece('p', false);
-//       board_.at(48+i) = p;
-//     }
 
-//     p = new game::Piece('r', false);
-//     board_.at(56) = p;
-//     p = new game::Piece('c', false);
-//     board_.at(57) = p;
-//     p = new game::Piece('b', false);
-//     board_.at(58) = p;
-//     p = new game::Piece('k', false);
-//     board_.at(59) = p;
-//     p = new game::Piece('q', false);
-//     board_.at(60) = p;
-//     p = new game::Piece('b', false);
-//     board_.at(61) = p;
-//     p = new game::Piece('c', false);
-//     board_.at(62) = p;
-//     p = new game::Piece('r', false);
-//     board_.at(63) = p;
+    auto p4 = new game::Queen('q', false, 3, 0, 9);
+    board_.at(3) = p4;
 
-// }
-//     void Board::print_board() {
-//       for (int i = 0; i < 64; i++) {
-//           if (i != 0 && i % 8 == 0)
-//             std::cout << "\n";
-//           char p = board_.at(i) ? board_.at(i)->piece_ : ' ';
-//           std::cout << "|" << p << "|";
-//         }
-//     }
-//     void Board::move(int start, int end) {
-//       board_.at(end) = board_.at(start);
-//       board_.at(start) = nullptr;
-//       print_board();
+
+    auto p5 = new game::Kig('k', false, 4, 0, 3);
+    board_.at(4) = p2;
+
+    auto p6 = new game::Bishop('b', false, 5, 0, 3);
+    board_.at(5) = p6;
+
+    auto p7 = new game::Knight('n', false, 6, 0, 3);
+    board_.at(6) = p7;
+
+    auto p8 = new game::Rook('r', false, 7, 0, 5);
+    board_.at(7) = p8;
+
+    for (int i = 0; i < 8; i++) {
+      auto p_b = new game::Pawn('p', false, i, 1, 1);
+      board_.at(i+8) = p_b;
     }
 
-    std::pair<int, int> Board::compute_move(std::string move_not) {
-        return std::pair<int, int>(12,20);
+    for (int i = 0; i < 8; i++) {
+        auto p_w = new game::Pawn('P', false, i, 6, 1);
+        board_.at(i+48) = p_w;
+    }
+
+    auto pa = new game::Rook('R', true, 0, 7, 5);
+    board_.at(56) = pa;
+
+    auto pb = new game::Knight('N', true, 1, 7, 3);
+    board_.at(57) = pb;
+
+    auto pc = new game::Bishop('B', true, 2, 7, 3);
+    board_.at(58) = pc;
+
+
+    auto pd = new game::Queen('Q', true, 3, 7, 9);
+    board_.at(59) = pd;
+
+
+    auto pe = new game::Kig('K', true, 4, 7, 3);
+    board_.at(60) = pe;
+
+    auto pf = new game::Bishop('B', true, 5, 7, 3);
+    board_.at(61) = pf;
+
+    auto pg = new game::Knight('N', true, 6, 7, 3);
+    board_.at(62) = pg;
+
+    auto ph = new game::Rook('R', true, 7, 7, 5);
+    board_.at(63) = ph;
+}
+    void Board::print_board() {
+      for (int i = 0; i < 64; i++) {
+          if (i != 0 && i % 8 == 0)
+            std::cout << "\n";
+          char p = ' ';
+          if (board_.at(i)) {
+              p = board_.at(i)->get_piece();
+          }
+          std::cout << "|" << p << "|";
+        }
+    }
+    void Board::move(int start, int end) {
+      board_.at(end) = board_.at(start);
+      board_.at(start) = nullptr;
+   }
+
+   int Board::compute_move(std::string move_not) {
+       std::string piece;
+       std::string destination;
+
+       if (islower(move_not[0])) {
+           piece = "p";
+           destination = move_not.substr(0, 2);
+       } else {
+           piece = move_not.substr(0, 1);
+           destination = move_not.substr(1, 2);
+       }
+       std::cout << "P:" << piece << " dest:" << destination << "\n\n";
+       //return make_pair(piece, destination);
+//       move(48+4,7*4+4);
+       return 0;
     }
 } /* game */

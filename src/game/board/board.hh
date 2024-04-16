@@ -13,7 +13,7 @@ public:
     Board();
     void move(int start,int end);
     void print_board();
-    std::pair<int,int> compute_move(std::string move_not);
+    int compute_move(std::string move_not);
   private:
     std::array<Piece*,64> board_;
 };

@@ -6,9 +6,9 @@
 
 namespace game
 {
-    class Pawn : public Piece {
+    class Queen : public Piece {
     public:
-        Pawn(char piece,bool white,int x,int y,int value);
+        Queen(char piece,bool white,int x,int y,int value);
         std::list<std::pair<int, int>> compute_move() override;
 };
 } // namespace game
