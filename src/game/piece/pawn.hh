@@ -13,5 +13,6 @@ namespace game
         void has_moved() override;
       private:
         bool started = true;
+        bool en_passant = false;
 };
 } // namespace game

@@ -1,6 +1,7 @@
 
 #include "../board/board.hh"
 #include "game.hh"
+#include <cctype>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -10,6 +11,22 @@ Game::Game(Board &board, game::Player white_player, game::Player black_player)
     : board_(board), white_player_(white_player), black_player_(black_player) {
 }
 
+    // void Game::apply_check(bool white) {
+    //   for (int i = 0; i < 64; i++) {
+    //     auto p = board_.get_piece(i);
+
+    //     if (!p)
+    //       return;
+
+    //     if (board_.get_piece(i)->is_white() && white) {
+    //         board_.get_piece(i)->
+    //     }
+
+    //     if (!board_.get_piece(i)->is_white() && !white) {
+
+    //     }
+    //     }
+    // }
     void Game::play() {
 
       std::string input = "";

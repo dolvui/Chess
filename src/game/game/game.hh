@@ -7,6 +7,7 @@ class Game {
 public:
     Game(Board& board,game::Player white_player ,game::Player black_player);
     void play();
+//    void apply_check(bool white);
 private:
     game::Board board_;
     game::Player white_player_;
