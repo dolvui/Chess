@@ -10,5 +10,9 @@ namespace game {
 
 
     inline void Piece::set_x(int x){x_ = x;}
-    inline void Piece::set_y(int y ) {y_ = y;}
+    inline void Piece::set_y(int y) { y_ = y; }
+    inline void Piece::set_pos(int pos) {
+      x_ = pos % 8;
+      y_ = pos / 8;
+    }
 }

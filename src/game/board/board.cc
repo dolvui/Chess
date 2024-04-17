@@ -34,7 +34,7 @@ Board::Board() : board_(std::array<Piece *, 64>()) {
 
 
     auto p5 = new game::Kig('k', false, 4, 0, 3);
-    board_.at(4) = p2;
+    board_.at(4) = p5;
 
     auto p6 = new game::Bishop('b', false, 5, 0, 3);
     board_.at(5) = p6;
@@ -81,21 +81,40 @@ Board::Board() : board_(std::array<Piece *, 64>()) {
     auto ph = new game::Rook('R', true, 7, 7, 5);
     board_.at(63) = ph;
 }
-    void Board::print_board() {
+void Board::print_board() {
+  int c = 8;
       for (int i = 0; i < 64; i++) {
-          if (i != 0 && i % 8 == 0)
-            std::cout << "\n";
+        if (i % 8 == 0) {
+            std::cout << "\n" << c << ";";
+            c--;
+        }
           char p = ' ';
           if (board_.at(i)) {
               p = board_.at(i)->get_piece();
           }
           std::cout << "|" << p << "|";
-        }
+      }
+      std::cout << "\n  ";
+      for (int i = 1; i <= 8; i++) {
+          std::cout << "---";
+      }
+      std::cout << "\n  ";
+      for (char i = 'a'; i <= 'h'; i++) {
+          std::cout << "|" << i << "|";
+      }
     }
     void Board::move(int start, int end) {
       board_.at(end) = board_.at(start);
       board_.at(start) = nullptr;
+      board_.at(end)->set_pos(end);
    }
+
+
+   int convert(char l, char num) {
+       std::cout << "recieve pos: " << l << num << " or " <<
+           8 - (num - '0') << "," << (l - 'a')<< "\n";
+       return (8-(num - '0')) * 8 + (l - 'a');
+    }
 
     int Board::compute_move(std::string move_not,bool white) {
        std::string piece;
@@ -108,14 +127,12 @@ Board::Board() : board_(std::array<Piece *, 64>()) {
            piece = move_not.substr(0, 1);
            destination = move_not.substr(1, 2);
        }
-       int dest = (destination[0] - 'a') * 8 + destination[1] - '1';
-       dest++;
+       int dest = convert(destination[0],destination[1]);
        int start = find_start(piece[0], white, dest);
        std::cout << "start: " << start << " and dest: " << dest << "\n";
        move(start,dest);
        return 0;
     }
-
     int Board::find_start(char piece, bool white, int dest) {
         if (!white)
             piece = std::tolower(piece);
@@ -123,7 +140,9 @@ Board::Board() : board_(std::array<Piece *, 64>()) {
             if (board_.at(i) && board_.at(i)->get_piece() == piece) {
             auto l = board_.at(i)->compute_move();
             for (auto m : l) {
-//                std::cout << "from " << i << " to " << m.second*8 + m.first << "\n";
+              std::cout << "from " << i
+                        << " to "
+                        << m.second*8 + m.first << "\n";
               if (m.second*8 + m.first == dest)
                   return i;
             }

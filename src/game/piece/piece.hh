@@ -8,6 +8,7 @@ namespace game
 class Piece {
 public:
     virtual std::list<std::pair<int, int>> compute_move() = 0;
+    virtual void has_moved() = 0;
     // Piece(char piece, bool white, int x, int y, int value);
     //Piece() = default;
     char get_piece();
@@ -18,6 +19,7 @@ public:
 
     void set_x(int x);
     void set_y(int y);
+    void set_pos(int pos);
 protected:
     char piece_;
     bool white_;
