@@ -44,7 +44,7 @@ Game::Game(Board &board, game::Player white_player, game::Player black_player)
             break;
           if (board_.compute_move(input, move % 2 == 0) != 0)
               std::cout << "error move";
-
+          board_.get_legal_moves(move % 2 == 0);
           board_.print_board();
           move++;
       }

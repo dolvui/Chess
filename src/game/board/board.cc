@@ -111,14 +111,19 @@ void Board::print_board() {
 
 
    int convert(char l, char num) {
-       std::cout << "recieve pos: " << l << num << " or " <<
-           8 - (num - '0') << "," << (l - 'a')<< "\n";
+       // std::cout << "recieve pos: " << l << num << " or " <<
+       //     8 - (num - '0') << "," << (l - 'a')<< "\n";
        return (8-(num - '0')) * 8 + (l - 'a');
     }
 
     int Board::compute_move(std::string move_not,bool white) {
        std::string piece;
        std::string destination;
+
+       if (move_not.compare("O-O") == 0)
+         return 1;
+       if (move_not.compare("O-O-O") == 0)
+         return 1;
 
        if (islower(move_not[0])) {
            piece = "P";
@@ -129,7 +134,7 @@ void Board::print_board() {
        }
        int dest = convert(destination[0],destination[1]);
        int start = find_start(piece[0], white, dest);
-       std::cout << "start: " << start << " and dest: " << dest << "\n";
+//       std::cout << "start: " << start << " and dest: " << dest << "\n";
        move(start,dest);
        return 0;
     }
@@ -138,11 +143,11 @@ void Board::print_board() {
             piece = std::tolower(piece);
         for (int i = 0 ; i < 64 ; i++) {
             if (board_.at(i) && board_.at(i)->get_piece() == piece) {
-            auto l = board_.at(i)->compute_move();
+            auto l = board_.at(i)->compute_move(board_);
             for (auto m : l) {
-              std::cout << "from " << i
-                        << " to "
-                        << m.second*8 + m.first << "\n";
+              // std::cout << "from " << i
+              //           << " to "
+              //           << m.second*8 + m.first << "\n";
               if (m.second*8 + m.first == dest)
                   return i;
             }
@@ -150,7 +155,27 @@ void Board::print_board() {
         }
         return -1;
     }
-   game::Piece* Board::get_piece(int i) {
-       return board_.at(i);
-   }
+
+    std::list<std::pair<int, int>> Board::get_legal_moves(bool white) {
+      auto rep = std::list<std::pair<int, int>>();
+      for (int i = 0 ; i < 64 ; i++) {
+          if (board_.at(i)) {
+            if (!(board_.at(i)->is_white() ^ white)) {
+              auto l = board_.at(i)->compute_move(board_);
+              std::cout << "for the "
+                        << board_.at(i)->get_piece()
+                        << " in " << i << " :\n";
+              for (auto m : l) {
+                std::cout << board_.at(i)->get_x()
+                          << ","
+                          << board_.at(i)->get_y()
+                            <<" to " << m.first << "," << m.second << "\n";
+              }
+              rep.merge(l);
+            };
+        }
+      }
+      return rep;
+    }
+    game::Piece *Board::get_piece(int i) { return board_.at(i); }
 } /* game */

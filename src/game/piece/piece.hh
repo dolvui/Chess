@@ -2,15 +2,15 @@
 
 #include <utility>
 #include <list>
+#include <array>
 
 namespace game
 {
 class Piece {
 public:
-    virtual std::list<std::pair<int, int>> compute_move() = 0;
+  virtual std::list<std::pair<int, int>>
+  compute_move(std::array<Piece*,64>&) = 0;
     virtual void has_moved() = 0;
-    // Piece(char piece, bool white, int x, int y, int value);
-    //Piece() = default;
     char get_piece();
     bool is_white();
     int get_x();

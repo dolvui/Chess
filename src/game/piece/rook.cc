@@ -13,7 +13,7 @@ Rook::Rook(char piece, bool white, int x, int y, int value) {
   this->value_ = value;
 }
 
-    std::list<std::pair<int, int>> Rook::compute_move() {
+    std::list<std::pair<int, int>> Rook::compute_move(std::array<Piece*,64>&) {
       auto rep = std::list<std::pair<int, int>>();
 
       int i = x_ + 1;
