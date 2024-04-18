@@ -13,7 +13,8 @@ Queen::Queen(char piece, bool white, int x, int y, int value) {
   this->value_ = value;
 }
 
-    std::list<std::pair<int, int>> Queen::compute_move(std::array<Piece*,64>&) {
+std::list<std::pair<int, int>>
+Queen::compute_move(game::Board& board) {
       auto rep = std::list<std::pair<int, int>>();
 
       int i = x_ + 1;

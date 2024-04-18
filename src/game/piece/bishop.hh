@@ -10,7 +10,7 @@ namespace game
     public:
         Bishop(char piece,bool white,int x,int y,int value);
         std::list<std::pair<int, int>>
-        compute_move(std::array<Piece*,64>&) override;
+        compute_move(game::Board& board) override;
         void has_moved() override{};
 };
 } // namespace game

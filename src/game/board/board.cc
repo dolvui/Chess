@@ -103,10 +103,15 @@ void Board::print_board() {
           std::cout << "|" << i << "|";
       }
     }
-    void Board::move(int start, int end) {
+    int  Board::move(int start, int end) {
+      if (start >= 64 || start < 0 || end >= 64 || end < 0) {
+          std::cout << "move not legit sorry";
+          return 1;
+      }
       board_.at(end) = board_.at(start);
       board_.at(start) = nullptr;
       board_.at(end)->set_pos(end);
+      return 0;
    }
 
 
@@ -135,15 +140,14 @@ void Board::print_board() {
        int dest = convert(destination[0],destination[1]);
        int start = find_start(piece[0], white, dest);
 //       std::cout << "start: " << start << " and dest: " << dest << "\n";
-       move(start,dest);
-       return 0;
+       return move(start,dest);
     }
     int Board::find_start(char piece, bool white, int dest) {
         if (!white)
             piece = std::tolower(piece);
         for (int i = 0 ; i < 64 ; i++) {
             if (board_.at(i) && board_.at(i)->get_piece() == piece) {
-            auto l = board_.at(i)->compute_move(board_);
+            auto l = board_.at(i)->compute_move(*this);
             for (auto m : l) {
               // std::cout << "from " << i
               //           << " to "
@@ -161,7 +165,7 @@ void Board::print_board() {
       for (int i = 0 ; i < 64 ; i++) {
           if (board_.at(i)) {
             if (!(board_.at(i)->is_white() ^ white)) {
-              auto l = board_.at(i)->compute_move(board_);
+              auto l = board_.at(i)->compute_move(*this);
               std::cout << "for the "
                         << board_.at(i)->get_piece()
                         << " in " << i << " :\n";
@@ -177,5 +181,13 @@ void Board::print_board() {
       }
       return rep;
     }
-    game::Piece *Board::get_piece(int i) { return board_.at(i); }
+    bool Board::is_adv_piece(int i, int j, bool white) {
+        int pos = (j * 8 + i);
+        if (pos < 0 || pos >= 64)
+            return false;
+      auto p = board_.at(pos);
+      if(p)
+        return p->is_white() ^ white;
+      return true;
+    }
 } /* game */
