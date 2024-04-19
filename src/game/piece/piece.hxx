@@ -14,5 +14,6 @@ namespace game {
     inline void Piece::set_pos(int pos) {
       x_ = pos % 8;
       y_ = pos / 8;
+      is_started = false;
     }
 }

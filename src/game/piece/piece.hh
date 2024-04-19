@@ -30,6 +30,7 @@ namespace game {
         int x_;
         int y_;
         int value_;
+        bool is_started = true;
     };
 } // namespace game
 

@@ -182,12 +182,21 @@ void Board::print_board() {
       return rep;
     }
     bool Board::is_adv_piece(int i, int j, bool white) {
-        int pos = (j * 8 + i);
+      int pos = (j * 8 + i);
         if (pos < 0 || pos >= 64)
             return false;
       auto p = board_.at(pos);
       if(p)
         return p->is_white() ^ white;
       return true;
+    }
+    bool Board::is_capt_piece(int i, int j, bool white) {
+      int pos = (j * 8 + i);
+        if (pos < 0 || pos >= 64)
+            return false;
+      auto p = board_.at(pos);
+      if(p)
+        return p->is_white() ^ white;
+      return false;
     }
 } /* game */
