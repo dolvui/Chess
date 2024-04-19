@@ -15,15 +15,12 @@ run :  make -B && ./chess
 
 playble like the wood version ,
 
-need more collide check ,
+check if the king in check and see wich moves are legal
 
-check if the king in check and see wich moves are legit 
+check about stalemate and checkmate ,
 
-check about stalemate and check mate ,
-
-add about pawns dynamique
+add about pawns promote
 
 add roc (O-O and O-O-O)
 
 after that it should nice for a bot!
-
