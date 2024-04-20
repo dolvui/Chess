@@ -55,6 +55,7 @@ Board::Board() : board_(std::array<Piece *, 64>()) {
         board_.at(i+48) = p_w;
     }
 
+
     auto pa = new game::Rook('R', true, 0, 7, 5);
     board_.at(56) = pa;
 
@@ -63,7 +64,6 @@ Board::Board() : board_(std::array<Piece *, 64>()) {
 
     auto pc = new game::Bishop('B', true, 2, 7, 3);
     board_.at(58) = pc;
-
 
     auto pd = new game::Queen('Q', true, 3, 7, 9);
     board_.at(59) = pd;
@@ -111,9 +111,31 @@ void Board::print_board() {
       board_.at(end) = board_.at(start);
       board_.at(start) = nullptr;
       board_.at(end)->set_pos(end);
+
+      if (tolower(board_.at(end)->get_piece()) == 'k' &&
+          abs(end - start) == 2) {
+        if (abs(end - start) < 0) {
+            move(end - 2 , start - 1);
+        }else {
+          move(end + 1, start + 1);
+                }
+      }
       return 0;
    }
 
+   /*
+     | Little | white | ret
+     |   0    |  0    |  0
+     |   0    |  1    |  1
+     |   1    |  0    |  0
+     |   1    |  1    |  1 really xd ???
+    */
+   int Board::caslte(bool little, bool white) {
+     int start = white ? 60 : 4;
+     if(little)
+       return move(start, start + 2);
+     return move(start , start  - 2);
+    }
 
    int convert(char l, char num) {
        // std::cout << "recieve pos: " << l << num << " or " <<
@@ -125,10 +147,10 @@ void Board::print_board() {
        std::string piece;
        std::string destination;
 
-       if (move_not.compare("O-O") == 0)
-         return 1;
-       if (move_not.compare("O-O-O") == 0)
-         return 1;
+       if (move_not.compare("O-O") == 0 || move_not.compare("0-0") == 0)
+           return caslte(true,white);
+       if (move_not.compare("O-O-O") == 0 || move_not.compare("0-0-0") == 0)
+         return caslte(false,white);
 
        if (islower(move_not[0])) {
            piece = "P";
@@ -204,5 +226,17 @@ void Board::print_board() {
             return false;
       auto p = board_.at(pos);
       return !p;
+
+    }
+    bool Board::can_castle(int x, int y, int new_x) {
+      for (int i = y * 8 + x; i < y * 8 + new_x; i++) {
+        if (board_.at(i))
+            return false;
+      }
+      if(new_x < 0)
+        return board_.at(y * 8 + new_x - 1) &&
+            board_.at(y * 8 + new_x - 1)->get_started();
+      return board_.at(y * 8 + new_x + 1) &&
+            board_.at(y * 8 + new_x + 1)->get_started();
     }
 } /* game */

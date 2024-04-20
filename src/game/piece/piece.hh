@@ -18,6 +18,7 @@ namespace game {
         int get_x();
         int get_y();
         int get_value();
+        bool get_started();
 
         void set_x(int x);
         void set_y(int y);

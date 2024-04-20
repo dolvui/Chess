@@ -7,7 +7,7 @@ namespace game {
     inline int Piece::get_x(){return x_;}
     inline int Piece::get_y(){return y_;}
     inline int Piece::get_value() { return value_; }
-
+    inline bool Piece::get_started() {return is_started;}
 
     inline void Piece::set_x(int x){x_ = x;}
     inline void Piece::set_y(int y) { y_ = y; }

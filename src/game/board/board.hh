@@ -19,6 +19,8 @@ namespace game {
         bool is_adv_piece(int x, int y, bool white);
         bool is_capt_piece(int i, int j, bool white);
         bool is_piece_move(int i, int j, bool white);
+        bool can_castle(int x, int y, int new_x);
+        int caslte(bool little,bool white);
         std::list<std::pair<int, int>> get_legal_moves(bool white);
     private:
         std::array<Piece*,64> board_;
