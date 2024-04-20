@@ -18,6 +18,7 @@ namespace game {
         int find_start(char piece, bool white, int dest);
         bool is_adv_piece(int x, int y, bool white);
         bool is_capt_piece(int i, int j, bool white);
+        bool is_piece_move(int i, int j, bool white);
         std::list<std::pair<int, int>> get_legal_moves(bool white);
     private:
         std::array<Piece*,64> board_;

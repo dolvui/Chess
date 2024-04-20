@@ -184,7 +184,8 @@ void Board::print_board() {
     bool Board::is_adv_piece(int i, int j, bool white) {
       int pos = (j * 8 + i);
         if (pos < 0 || pos >= 64)
-            return false;
+          return false;
+
       auto p = board_.at(pos);
       if(p)
         return p->is_white() ^ white;
@@ -195,8 +196,13 @@ void Board::print_board() {
         if (pos < 0 || pos >= 64)
             return false;
       auto p = board_.at(pos);
-      if(p)
-        return p->is_white() ^ white;
-      return false;
+      return p && p->is_white() ^ white;
+    }
+    bool Board::is_piece_move(int i, int j, bool white) {
+      int pos = (j * 8 + i);
+        if (pos < 0 || pos >= 64)
+            return false;
+      auto p = board_.at(pos);
+      return !p;
     }
 } /* game */

@@ -18,16 +18,18 @@ namespace game {
         auto rep = std::list<std::pair<int, int>>();
 
         if (white_) {
-            if(board.is_adv_piece(x_,y_ - 1,white_))
-                rep.push_front(std::pair<int, int>(x_, y_ - 1));
+
+          if (board.is_piece_move(x_, y_ - 1, white_)) {
+            rep.push_front(std::pair<int, int>(x_, y_ - 1));
+            if(is_started && board.is_piece_move(x_,y_ - 2,white_))
+              rep.push_front(std::pair<int, int>(x_, y_ - 2));
+          }
 
             if(board.is_capt_piece(x_ + 1,y_ - 1,white_))
-                rep.push_front(std::pair<int, int>(x_ + 1, y_ - 1));
+              rep.push_front(std::pair<int, int>(x_ + 1, y_ - 1));
+
             if(board.is_capt_piece(x_ - 1,y_ - 1,white_))
                 rep.push_front(std::pair<int, int>(x_ - 1, y_ - 1));
-
-            if(is_started && board.is_adv_piece(x_,y_ - 2,white_))
-                rep.push_front(std::pair<int, int>(x_, y_ - 2));
 
         } else {
             if(board.is_adv_piece(x_,y_ + 1,white_))
