@@ -229,7 +229,14 @@ void Board::print_board() {
 
     }
     bool Board::can_castle(int x, int y, int new_x) {
-      for (int i = y * 8 + x; i < y * 8 + new_x; i++) {
+      int start = y * 8 + x;
+      int end = y * 8 + new_x;
+      if (start > end) {
+          start = start ^ end;
+          end = start ^ end;
+          start = start ^ end;
+      }
+      for (int i = start + 1; i < end; i++) {
         if (board_.at(i))
             return false;
       }
