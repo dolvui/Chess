@@ -12,13 +12,18 @@
 #include "../piece/queen.hh"
 #include "../piece/pawn.hh"
 #include "../piece/knight.hh"
+#include "../piece/hold.hh"
 
 #include "../player/player.hh"
 #include "board.hh"
 
 namespace game
 {
-Board::Board() : board_(std::array<Piece *, 64>()) {
+Board::Board()
+    : board_(std::array<Piece *, 64>()),
+      hold_white_(new game::Hold('H', true, -1, -1, -1)),
+      hold_black_(new game::Hold('h', false, -1, -1, -2))
+{
     auto p1 = new game::Rook('r', false, 0, 0, 5);
     board_.at(0) = p1;
 
@@ -64,7 +69,6 @@ Board::Board() : board_(std::array<Piece *, 64>()) {
 
     auto pc = new game::Bishop('B', true, 2, 7, 3);
     board_.at(58) = pc;
-
     auto pd = new game::Queen('Q', true, 3, 7, 9);
     board_.at(59) = pd;
 
@@ -203,6 +207,23 @@ void Board::print_board() {
       }
       return rep;
     }
+
+//     void Board::update(bool white) {
+//         for (int i = 0 ; i < 64 ; i++) {
+//             if (board_.at(i) && board_.at(i)->get_value() > 0) {
+//                 auto l = board_.at(i)->compute_move(*this);
+//                 for (auto move : l) {
+//                     if(white && !board_.at(move.second * 8 + move.first))
+//                       board_.at(move.second * 8 + move.first) = hold_white_;
+//                     if(!white && !board_.at(move.second * 8 + move.first))
+//                       board_.at(move.second * 8 + move.first) = hold_black_;
+// //                    std::cout << "at" <<
+//                 }
+//             }
+
+//         }
+//     }
+
     bool Board::is_adv_piece(int i, int j, bool white) {
       int pos = (j * 8 + i);
         if (pos < 0 || pos >= 64)
@@ -231,10 +252,12 @@ void Board::print_board() {
     bool Board::can_castle(int x, int y, int new_x) {
       int start = y * 8 + x;
       int end = y * 8 + new_x;
+      int a = 1;
       if (start > end) {
           start = start ^ end;
           end = start ^ end;
           start = start ^ end;
+          a = -1;
       }
       for (int i = start + 1; i < end; i++) {
         if (board_.at(i))

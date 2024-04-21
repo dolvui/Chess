@@ -20,9 +20,12 @@ namespace game {
         bool is_capt_piece(int i, int j, bool white);
         bool is_piece_move(int i, int j, bool white);
         bool can_castle(int x, int y, int new_x);
-        int caslte(bool little,bool white);
+        int caslte(bool little, bool white);
+//        void update(bool white);
         std::list<std::pair<int, int>> get_legal_moves(bool white);
     private:
-        std::array<Piece*,64> board_;
+        std::array<Piece *, 64> board_;
+        Piece *hold_white_;
+        Piece *hold_black_;
     };
 } /* game */
