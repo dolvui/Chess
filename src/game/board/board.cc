@@ -147,6 +147,41 @@ void Board::print_board() {
        return (8-(num - '0')) * 8 + (l - 'a');
     }
 
+    int Board::promote(int start, int end, char prom) {
+        if (start >= 64 || start < 0 || end >= 64 || end < 0 || end < 56 ) {
+            std::cout << "move not legit sorry";
+            return 1;
+        }
+
+        switch (prom) {
+        case 'N':
+          board_.at(end) = new game::Knight('N', board_.at(start)->is_white(),
+                                            board_.at(start)->get_x(),
+                                            board_.at(start)->get_y(),3);
+            break;
+        case 'B':
+            board_.at(end) = new game::Bishop('B', board_.at(start)->is_white(),
+                                            board_.at(start)->get_x(),
+                                            board_.at(start)->get_y(),3);
+            break;
+        case 'Q':
+            board_.at(end) = new game::Queen('Q', board_.at(start)->is_white(),
+                                            board_.at(start)->get_x(),
+                                            board_.at(start)->get_y(),9);
+            break;
+        case 'R':
+            board_.at(end) = new game::Rook('R', board_.at(start)->is_white(),
+                                            board_.at(start)->get_x(),
+                                            board_.at(start)->get_y(),5);
+            break;
+        default:
+            return 1;
+        }
+        // board_.at(start);
+        board_.at(start) = nullptr;
+        board_.at(end)->set_pos(end);
+        return 0;
+    }
     int Board::compute_move(std::string move_not,bool white) {
        std::string piece;
        std::string destination;
@@ -159,6 +194,11 @@ void Board::print_board() {
        if (islower(move_not[0])) {
            piece = "P";
            destination = move_not.substr(0, 2);
+           if (move_not.length() == 4) {
+               int dest = convert(destination[0],destination[1]);
+               int start = find_start(piece[0], white, dest);
+               return promote(start,dest,move_not[3]);
+           }
        } else {
            piece = move_not.substr(0, 1);
            destination = move_not.substr(1, 2);

@@ -21,6 +21,7 @@ namespace game {
         bool is_piece_move(int i, int j, bool white);
         bool can_castle(int x, int y, int new_x);
         int caslte(bool little, bool white);
+        int promote(int start, int end, char prom);
 //        void update(bool white);
         std::list<std::pair<int, int>> get_legal_moves(bool white);
     private:
