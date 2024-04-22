@@ -39,10 +39,10 @@ namespace game {
         if(board.is_adv_piece(x_ - 1,y_ - 1,white_))
             rep.push_front(std::pair<int, int>(x_ - 1, y_ - 1));
 
-        if (is_started && board.can_castle(x_, y_, x_ - 2)) {
+        if (is_started && board.can_big_castle(x_, y_, x_ - 2)) {
             rep.push_front(std::pair<int, int>(x_ - 2, y_));
         }
-        if (is_started && board.can_castle(x_, y_, x_ + 2)) {
+        if (is_started && board.can_lil_castle(x_, y_, x_ + 2)) {
             rep.push_front(std::pair<int, int>(x_ + 2, y_));
         }
         return rep;

@@ -46,7 +46,7 @@ Game::Game(Board &board, game::Player white_player, game::Player black_player)
             std::cout << "error move\n";
           else
               move++;
-          //board_.get_legal_moves(move % 2 == 0);
+          board_.get_legal_moves(move % 2 == 0);
 //          board_.update(move % 2 == 0);
           board_.print_board();
       }

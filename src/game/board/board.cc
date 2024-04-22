@@ -112,14 +112,17 @@ void Board::print_board() {
           std::cout << "move not legit sorry";
           return 1;
       }
+//      std::cout << "start: " << start << "end: " << end<<"\n";
       board_.at(end) = board_.at(start);
       board_.at(start) = nullptr;
       board_.at(end)->set_pos(end);
-
+      board_.at(end)->has_moved();
       if (tolower(board_.at(end)->get_piece()) == 'k' &&
           abs(end - start) == 2) {
-        if (abs(end - start) < 0) {
-            move(end - 2 , start - 1);
+          //std::cout << abs(end - start) << "\n";
+        if (end - start < 0) {
+            move(end - 2 , end + 1);
+            //std::cout << "a:" << end -2 << "b: " << end + 1 << "\n";
         }else {
           move(end + 1, start + 1);
                 }
@@ -289,24 +292,27 @@ void Board::print_board() {
       return !p;
 
     }
-    bool Board::can_castle(int x, int y, int new_x) {
+    bool Board::can_big_castle(int x, int y, int new_x) {
       int start = y * 8 + x;
       int end = y * 8 + new_x;
-      int a = 1;
-      if (start > end) {
-          start = start ^ end;
-          end = start ^ end;
-          start = start ^ end;
-          a = -1;
-      }
-      for (int i = start + 1; i < end; i++) {
-        if (board_.at(i))
+
+      if (board_.at(start - 1) || board_.at(start - 2) ||
+          board_.at(start - 3) ||
+          (board_.at(start - 4) && !board_.at(start - 4 )->get_started())){
             return false;
       }
-      if(new_x < 0)
-        return board_.at(y * 8 + new_x - 1) &&
-            board_.at(y * 8 + new_x - 1)->get_started();
-      return board_.at(y * 8 + new_x + 1) &&
-            board_.at(y * 8 + new_x + 1)->get_started();
+      //std::cout << "can big !!!!\n";
+      return true;
+    }
+    bool Board::can_lil_castle(int x, int y, int new_x) {
+      int start = y * 8 + x;
+      int end = y * 8 + new_x;
+
+      if (board_.at(start + 1) || board_.at(start + 2) ||
+          (board_.at(start + 3) && !board_.at(start + 3)->get_started())){
+            return false;
+      }
+      //std::cout << "can little !!!!\n";
+      return true;
     }
 } /* game */

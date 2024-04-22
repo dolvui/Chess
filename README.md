@@ -19,6 +19,4 @@ check if the king in check and see wich moves are legal
 
 check about stalemate and checkmate ,
 
-add roc (O-O and O-O-O) little roc seems fine
-
 after that it should nice for a bot!
