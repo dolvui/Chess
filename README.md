@@ -9,14 +9,60 @@ after this task done , i would like to make a bot ,
 -next a RN full-connected,
 mostly 64-40-20-10-1
     input: board , heuristic
-    output: -1 < heuristic < 1
+    output: -n < heuristic < n
 
-run :  make -B && ./chess
+## RUN
+make -B && ./chess
 
-playble like the wood version and more,
 
+## NOTATION
+
+pawn:
+    [letter][number]
+    ex: e4
+    [letter][number][=][PROM]
+    ex: e8=Q
+
+figures:
+    King : K
+    Queen : Q
+    Knight : N
+    Bishop : B
+    Rook : R
+
+    [FIGURE][letter][number]
+    ex:
+    Nf6
+    Re4
+    Kb4
+
+castling:
+    little roc:
+        0-0
+        O-O
+    big roc:
+        0-0-0
+        O-O-O
+
+## description of the current version
+
+### specify move
+
+when 2 pieces can make the same move,
+for instance , two rook can move at the same square,
+a move like :
+    Rb4
+become:
+    Rbeb4 or R3b4
+the column or row is specify in the notation which not implemented now
+
+### legal moves and check
 check if the king in check and see wich moves are legal
+method implemted need to use it!
 
-check about stalemate and checkmate ,
+### end a game
+check about stalemate and checkmate,
+should be easy enough
 
-after that it should nice for a bot!
+### add prom moves for futur bots
+need to add promotion move for bots

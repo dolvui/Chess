@@ -32,7 +32,8 @@ namespace game {
                 rep.push_front(std::pair<int, int>(x_ - 1, y_ - 1));
 
         } else {
-            if(board.is_adv_piece(x_,y_ + 1,white_))
+            if (board.is_move_legal(white_,y_*8+x_,(y_+1)*8+x_)
+              && board.is_adv_piece(x_,y_ + 1,white_))
                 rep.push_front(std::pair<int, int>(x_, y_ + 1));
 
             if(board.is_capt_piece(x_ + 1,y_ + 1,white_))
