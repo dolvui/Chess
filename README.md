@@ -18,12 +18,14 @@ make -B && ./chess
 ## NOTATION
 
 pawn:
+
     [letter][number]
     ex: e4
     [letter][number][=][PROM]
     ex: e8=Q
 
 figures:
+
     King : K
     Queen : Q
     Knight : N
@@ -37,11 +39,14 @@ figures:
     Kb4
 
 castling:
+
     little roc:
         0-0
+        or
         O-O
     big roc:
         0-0-0
+        or
         O-O-O
 
 ## description of the current version
