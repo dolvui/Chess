@@ -268,38 +268,45 @@ void Board::print_board() {
         return 0;
     }
 
-    int Board::is_move_legal(bool white, int x_start, int y_start, int x_end,
-                             int y_end) {
-      int start = y_start * 8 + x_start;
-      int dest = y_end * 8 + x_end;
-      if (x_start < 0 || x_start > 7 || x_end < 0 || x_end > 7 ||
-          y_start < 0 || y_start > 7 || y_end < 0 || y_end > 7 ||
-          start < 0 || start >= 64 || dest < 0 || dest >= 64)
-          return false;
-      auto piece_start = board_.at(start);
-      auto piece_dest = board_.at(dest);
-      bool legal = true;
+    int Board::is_move_legal(bool white, bool check, int x_start, int y_start,
+                             int x_end, int y_end) {
+      if (check == false)
+          return true;
+        int start = y_start * 8 + x_start;
+        int dest = y_end * 8 + x_end;
+        if (x_start < 0 || x_start > 7 || x_end < 0 || x_end > 7 ||
+            y_start < 0 || y_start > 7 || y_end < 0 || y_end > 7 ||
+            start < 0 || start >= 64 || dest < 0 || dest >= 64)
+            return false;
+        auto piece_start = board_.at(start);
+        auto piece_dest = board_.at(dest);
+        bool legal = true;
 
-      board_.at(start) = nullptr;
-      board_.at(dest) = piece_start;
+        board_.at(start) = nullptr;
+        board_.at(dest) = piece_start;
 
-      for (int i = 0 ; i < 64 ; i++) {
-          if (board_.at(i) && board_.at(i)->get_value() > 0
-              && (board_.at(i)->is_white() ^ white)) {
-              auto l = board_.at(i)->compute_move(*this,false);
+        for (int i = 0 ; i < 64 ; i++) {
+            if (board_.at(i) && (board_.at(i)->is_white() ^ white)) {
+              auto l = board_.at(i)->compute_move(*this, false);
+              // std::cout << board_.at(i)->get_piece() << "("
+           //           << board_.at(i)->get_x() << "," << board_.at(i)->get_y()
+              //           << "): "
+//                        << l.size() << "\n";
                 for (auto move : l) {
                     int pos = move.second * 8 + move.first;
                     if (board_.at(pos) &&
                         tolower(board_.at(pos)->get_piece()) == 'k') {
                         legal = false;
+//                        std::cout << "\n ---oui check --- \n";
+                        break;
                     }
                 }
             }
-      }
+        }
 
-      board_.at(start) = piece_start;
-      board_.at(dest) = piece_dest;
-      return legal;
+        board_.at(start) = piece_start;
+        board_.at(dest) = piece_dest;
+        return legal;
     }
 
     bool Board::is_adv_piece(int i, int j, bool white) {

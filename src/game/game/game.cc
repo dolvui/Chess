@@ -28,7 +28,9 @@ namespace game {
                 std::cout << "error move\n";
             else
               move++;
-            //board_.get_legal_moves(move % 2 == 0);
+            if (board_.get_legal_moves(move % 2 == 0).size() == 0 ) {
+                std::cout << "no legal moves bro!\n";
+            }
             board_.print_board();
         }
         std::cout << "\n\n End of the game \n";

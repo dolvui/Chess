@@ -17,31 +17,31 @@ Knight::Knight(char piece, bool white, int x, int y, int value) {
     Knight::compute_move(game::Board& board, bool legal) {
         auto rep = std::list<std::pair<int, int>>();
 
-        if (legal && board.is_move_legal(white_, x_, y_, x_ + 2 , y_  + 1) &&
+        if (board.is_move_legal(white_, legal,x_, y_, x_ + 2 , y_  + 1) &&
             board.is_adv_piece(x_ + 2,y_ + 1,white_))
           rep.push_front(std::pair<int, int>(x_ + 2, y_ + 1));
-        if (legal && board.is_move_legal(white_, x_, y_, x_ + 2, y_ - 1) &&
+        if (board.is_move_legal(white_, legal,x_, y_, x_ + 2, y_ - 1) &&
             board.is_adv_piece(x_ + 2,y_ - 1,white_))
             rep.push_front(std::pair<int, int>(x_ +2, y_ - 1));
 
-        if (legal && board.is_move_legal(white_, x_, y_, x_ + 1, y_ - 2) &&
+        if (board.is_move_legal(white_, legal,x_, y_, x_ + 1, y_ - 2) &&
             board.is_adv_piece(x_ + 1,y_ - 2,white_))
           rep.push_front(std::pair<int, int>(x_ + 1, y_ - 2));
-        if (legal && board.is_move_legal(white_, x_, y_, x_ + 1, y_ + 2) &&
+        if (board.is_move_legal(white_, legal,x_, y_, x_ + 1, y_ + 2) &&
             board.is_adv_piece(x_ + 1,y_ + 2,white_))
             rep.push_front(std::pair<int, int>(x_ + 1, y_+ 2));
 
-        if (legal && board.is_move_legal(white_, x_, y_, x_ - 2, y_ + 1) &&
+        if (board.is_move_legal(white_, legal,x_, y_, x_ - 2, y_ + 1) &&
             board.is_adv_piece(x_ - 2 ,y_ + 1,white_))
           rep.push_front(std::pair<int, int>(x_ - 2, y_ + 1));
-        if (legal && board.is_move_legal(white_, x_, y_, x_ - 2, y_ - 1) &&
+        if (board.is_move_legal(white_, legal,x_, y_, x_ - 2, y_ - 1) &&
             board.is_adv_piece(x_ - 2 ,y_ - 1,white_))
             rep.push_front(std::pair<int, int>(x_ - 2, y_ - 1));
 
-        if (legal && board.is_move_legal(white_, x_, y_, x_ -1 , y_ - 2) &&
+        if (board.is_move_legal(white_, legal,x_, y_, x_ -1 , y_ - 2) &&
             board.is_adv_piece(x_ - 1,y_ - 2,white_))
           rep.push_front(std::pair<int, int>(x_ - 1, y_ - 2));
-        if (legal && board.is_move_legal(white_, x_, y_, x_ - 1, y_ + 2) &&
+        if (board.is_move_legal(white_, legal,x_, y_, x_ - 1, y_ + 2) &&
             board.is_adv_piece(x_ - 1,y_ + 2 ,white_))
             rep.push_front(std::pair<int, int>(x_ - 1, y_ + 2));
 
