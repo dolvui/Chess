@@ -61,10 +61,6 @@ become:
     Rbeb4 or R3b4
 the column or row is specify in the notation which not implemented now
 
-### legal moves and check
-check if the king in check and see wich moves are legal
-method implemted need to use it!
-
 ### end a game
 check about stalemate and checkmate,
 should be easy enough

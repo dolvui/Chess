@@ -13,12 +13,14 @@ Bishop::Bishop(char piece, bool white, int x, int y, int value) {
   this->value_ = value;
 }
 
-std::list<std::pair<int, int>> Bishop::compute_move(game::Board &board) {
+std::list<std::pair<int, int>>
+Bishop::compute_move(game::Board &board, bool legal) {
 
       auto rep = std::list<std::pair<int, int>>();
       int i = x_ + 1;
       int j = y_ + 1;
-      while (board.is_adv_piece(i,j,white_) && i < 8 && j < 8) {
+      while (legal && board.is_move_legal(white_, x_, y_, i, j) &&
+             board.is_adv_piece(i,j,white_) && i < 8 && j < 8) {
           rep.push_front(std::pair<int, int>(i, j));
           i++;
           j++;
@@ -26,7 +28,8 @@ std::list<std::pair<int, int>> Bishop::compute_move(game::Board &board) {
 
       i = x_ - 1;
       j = y_ - 1;
-      while (board.is_adv_piece(i,j,white_) && i >= 0  && j >= 0) {
+      while (legal && board.is_move_legal(white_, x_, y_, i, j) &&
+             board.is_adv_piece(i,j,white_) && i >= 0  && j >= 0) {
           rep.push_front(std::pair<int, int>(i, j));
           i--;
           j--;
@@ -34,7 +37,8 @@ std::list<std::pair<int, int>> Bishop::compute_move(game::Board &board) {
 
       i = x_ + 1;
       j = y_ - 1;
-      while (board.is_adv_piece(i,j,white_) && i < 8  && j >= 0) {
+      while (legal && board.is_move_legal(white_, x_, y_, i, j) &&
+             board.is_adv_piece(i,j,white_) && i < 8  && j >= 0) {
           rep.push_front(std::pair<int, int>(i, j));
           i++;
           j--;
@@ -42,7 +46,8 @@ std::list<std::pair<int, int>> Bishop::compute_move(game::Board &board) {
 
       i = x_ - 1;
       j = y_ + 1;
-      while (board.is_adv_piece(i,j,white_) && i >= 0  && j < 8) {
+      while (legal && board.is_move_legal(white_, x_, y_, i, j) &&
+             board.is_adv_piece(i,j,white_) && i >= 0  && j < 8) {
           rep.push_front(std::pair<int, int>(i, j));
           i--;
           j++;

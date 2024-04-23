@@ -11,7 +11,7 @@ namespace game {
     class Piece {
     public:
         virtual std::list<std::pair<int, int>>
-        compute_move(game::Board& board) = 0;
+        compute_move(game::Board& board, bool legal) = 0;
         virtual void has_moved() = 0;
         char get_piece();
         bool is_white();

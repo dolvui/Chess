@@ -24,7 +24,8 @@ namespace game {
         int caslte(bool little, bool white);
         int promote(int start, int end, char prom);
         int update(bool white);
-        int is_move_legal(bool white , int start , int dest);
+        int is_move_legal(bool white, int x_start,
+                          int y_start, int x_end,int y_end);
         std::list<std::pair<int, int>> get_legal_moves(bool white);
     private:
         std::array<Piece *, 64> board_;

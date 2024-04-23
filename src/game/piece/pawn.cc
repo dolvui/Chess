@@ -14,34 +14,43 @@ namespace game {
     }
 
     std::list<std::pair<int, int>>
-    Pawn::compute_move(game::Board& board) {
+    Pawn::compute_move(game::Board& board,bool legal) {
         auto rep = std::list<std::pair<int, int>>();
 
         if (white_) {
 
-          if (board.is_piece_move(x_, y_ - 1, white_)) {
+          if (legal && board.is_move_legal(white_,x_,y_,x_,y_ - 1)
+              && board.is_piece_move(x_, y_ - 1, white_)) {
             rep.push_front(std::pair<int, int>(x_, y_ - 1));
-            if(is_started && board.is_piece_move(x_,y_ - 2,white_))
+
+            if(legal && board.is_move_legal(white_,x_,y_,x_,y_ - 2)
+              && is_started && board.is_piece_move(x_,y_ - 2,white_))
               rep.push_front(std::pair<int, int>(x_, y_ - 2));
           }
 
-            if(board.is_capt_piece(x_ + 1,y_ - 1,white_))
+            if(legal && board.is_move_legal(white_,x_,y_,x_ + 1,y_ - 1)
+              && board.is_capt_piece(x_ + 1,y_ - 1,white_))
               rep.push_front(std::pair<int, int>(x_ + 1, y_ - 1));
 
-            if(board.is_capt_piece(x_ - 1,y_ - 1,white_))
+            if(legal && board.is_move_legal(white_,x_,y_,x_ - 1,y_ - 1)
+              && board.is_capt_piece(x_ - 1,y_ - 1,white_))
                 rep.push_front(std::pair<int, int>(x_ - 1, y_ - 1));
 
         } else {
-            if (board.is_move_legal(white_,y_*8+x_,(y_+1)*8+x_)
+            if (legal && board.is_move_legal(white_,x_,y_,x_,y_ + 1)
               && board.is_adv_piece(x_,y_ + 1,white_))
                 rep.push_front(std::pair<int, int>(x_, y_ + 1));
 
-            if(board.is_capt_piece(x_ + 1,y_ + 1,white_))
-                rep.push_front(std::pair<int, int>(x_ + 1, y_ + 1));
-            if(board.is_capt_piece(x_ - 1,y_ + 1,white_))
+            if(legal && board.is_move_legal(white_,x_,y_,x_ + 1,y_ + 1)
+              && board.is_capt_piece(x_ + 1,y_ + 1,white_))
+              rep.push_front(std::pair<int, int>(x_ + 1, y_ + 1));
+
+            if(legal && board.is_move_legal(white_,x_,y_,x_ - 1,y_ + 1)
+              && board.is_capt_piece(x_ - 1,y_ + 1,white_))
                 rep.push_front(std::pair<int, int>(x_ - 1, y_ + 1));
 
-            if(is_started && board.is_adv_piece(x_,y_ + 2,white_))
+            if(legal && board.is_move_legal(white_,x_,y_,x_,y_ + 2)
+              && is_started && board.is_adv_piece(x_,y_ + 2,white_))
                 rep.push_front(std::pair<int, int>(x_, y_ + 2));
         }
         return rep;

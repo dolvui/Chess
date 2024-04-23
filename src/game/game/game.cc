@@ -27,7 +27,8 @@ namespace game {
             if (board_.compute_move(input, move % 2 == 0) != 0)
                 std::cout << "error move\n";
             else
-                move++;
+              move++;
+            //board_.get_legal_moves(move % 2 == 0);
             board_.print_board();
         }
         std::cout << "\n\n End of the game \n";

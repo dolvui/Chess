@@ -216,7 +216,7 @@ void Board::print_board() {
             piece = std::tolower(piece);
         for (int i = 0 ; i < 64 ; i++) {
             if (board_.at(i) && board_.at(i)->get_piece() == piece) {
-            auto l = board_.at(i)->compute_move(*this);
+                auto l = board_.at(i)->compute_move(*this,true);
             for (auto m : l) {
               // std::cout << "from " << i
               //           << " to "
@@ -234,7 +234,7 @@ void Board::print_board() {
       for (int i = 0 ; i < 64 ; i++) {
           if (board_.at(i)) {
             if (!(board_.at(i)->is_white() ^ white)) {
-              auto l = board_.at(i)->compute_move(*this);
+                auto l = board_.at(i)->compute_move(*this,true);
               std::cout << "for the "
                         << board_.at(i)->get_piece()
                         << " in " << i << " :\n";
@@ -255,7 +255,7 @@ void Board::print_board() {
         for (int i = 0 ; i < 64 ; i++) {
           if (board_.at(i) && board_.at(i)->get_value() > 0
               && (board_.at(i)->is_white() ^ white)) {
-                auto l = board_.at(i)->compute_move(*this);
+              auto l = board_.at(i)->compute_move(*this,true);
                 for (auto move : l) {
                     int pos = move.second * 8 + move.first;
                     if (board_.at(pos) &&
@@ -268,7 +268,14 @@ void Board::print_board() {
         return 0;
     }
 
-    int Board::is_move_legal(bool white, int start, int dest) {
+    int Board::is_move_legal(bool white, int x_start, int y_start, int x_end,
+                             int y_end) {
+      int start = y_start * 8 + x_start;
+      int dest = y_end * 8 + x_end;
+      if (x_start < 0 || x_start > 7 || x_end < 0 || x_end > 7 ||
+          y_start < 0 || y_start > 7 || y_end < 0 || y_end > 7 ||
+          start < 0 || start >= 64 || dest < 0 || dest >= 64)
+          return false;
       auto piece_start = board_.at(start);
       auto piece_dest = board_.at(dest);
       bool legal = true;
@@ -279,7 +286,7 @@ void Board::print_board() {
       for (int i = 0 ; i < 64 ; i++) {
           if (board_.at(i) && board_.at(i)->get_value() > 0
               && (board_.at(i)->is_white() ^ white)) {
-                auto l = board_.at(i)->compute_move(*this);
+              auto l = board_.at(i)->compute_move(*this,false);
                 for (auto move : l) {
                     int pos = move.second * 8 + move.first;
                     if (board_.at(pos) &&
