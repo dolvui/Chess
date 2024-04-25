@@ -58,6 +58,8 @@ at 100% (may need little tweaks)
 and was more tricky than expected.
 overall after some feat about end of a game , its should be finished.
 
+## future features
+
 ### specify move
 
 when 2 pieces can make the same move,
@@ -76,6 +78,20 @@ should be easy enough
 
 -save and load games,
 -parse into FNE for more portability,
+
+## boting
+
+### first goal
+
+just make a boat with random moves
+
+### second goal
+
+a bot with minimal heuristic not tree
+
+### third goal
+
+a bot with minimal heuristic , tree
 
 ### add prom moves for futur bots
 need to add promotion move for bots
