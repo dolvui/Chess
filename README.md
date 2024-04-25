@@ -55,8 +55,7 @@ castling:
 
 the game seems playble in most of cases , the check features may not finished
 at 100% (may need little tweaks)
-and was more tricky than expected.
-overall after some feat about end of a game , its should be finished.
+checkmate is ok.
 
 ## future features
 
@@ -70,9 +69,8 @@ become:
     Rbeb4 or R3b4
 the column or row is specify in the notation which not implemented now
 
-### end a game
-check about stalemate and checkmate,
-should be easy enough
+### draw
+check about stalemate , 50 rule etc
 
 ### nice features
 

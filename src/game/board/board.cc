@@ -298,9 +298,9 @@ void Board::print_board() {
                   int pos = move.second * 8 + move.first;
                     if (board_.at(pos) &&
                         tolower(board_.at(pos)->get_piece()) == 'k') {
-                        std::cout << "this piece see the king at " << i
-                                  << " "
-                                  << board_.at(i)->get_piece() << "\n";
+                        // std::cout << "this piece see the king at " << i
+                        //           << " "
+                        //           << board_.at(i)->get_piece() << "\n";
                          board_.at(start) = piece_start;
                          board_.at(dest) = piece_dest;
                          return false;
