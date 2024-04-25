@@ -51,6 +51,13 @@ castling:
 
 ## description of the current version
 
+### classic moves
+
+the game seems playble in most of cases , the check features may not finished
+at 100% (may need little tweaks)
+and was more tricky than expected.
+overall after some feat about end of a game , its should be finished.
+
 ### specify move
 
 when 2 pieces can make the same move,
@@ -64,6 +71,11 @@ the column or row is specify in the notation which not implemented now
 ### end a game
 check about stalemate and checkmate,
 should be easy enough
+
+### nice features
+
+-save and load games,
+-parse into FNE for more portability,
 
 ### add prom moves for futur bots
 need to add promotion move for bots

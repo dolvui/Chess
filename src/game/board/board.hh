@@ -19,6 +19,8 @@ namespace game {
         bool is_adv_piece(int x, int y, bool white);
         bool is_capt_piece(int i, int j, bool white);
         bool is_piece_move(int i, int j, bool white);
+        bool is_adv_piece_one(int i, int j, bool white);
+        bool is_adv_piece_capt(int i, int j, bool white);
         bool can_big_castle(int x, int y, int new_x);
         bool can_lil_castle(int x, int y, int new_x);
         int caslte(bool little, bool white);

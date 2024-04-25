@@ -23,15 +23,17 @@ namespace game {
             std::cin >> input;
             std::cout << "\n\n";
             if (input.compare("exit") == 0)
-                break;
+              break;
             if (board_.compute_move(input, move % 2 == 0) != 0)
-                std::cout << "error move\n";
-            else
-              move++;
-            if (board_.get_legal_moves(move % 2 == 0).size() == 0 ) {
-                std::cout << "no legal moves bro!\n";
+              std::cout << "error move\n";
+            else {
+                move++;
+                if (board_.get_legal_moves(move % 2 == 0).size() == 0 ) {
+                    std::cout << "no legal moves bro!\n";
+                }
+                board_.print_board();
             }
-            board_.print_board();
+
         }
         std::cout << "\n\n End of the game \n";
     }

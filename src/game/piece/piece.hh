@@ -23,7 +23,7 @@ namespace game {
         void set_x(int x);
         void set_y(int y);
         void set_pos(int pos);
-
+        bool legit(int i, int j);
     protected:
         Piece() = default;
         char piece_;
