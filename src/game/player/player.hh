@@ -2,17 +2,23 @@
 
 #include <vector>
 #include <string>
-#include "../piece/piece.hh"
+#include "../board/board.hh"
 
-namespace game
-{
+namespace game {
+    class Board;
 class Player{
 public:
-    Player(std::string name);
+    Player() = default;
+    Player(std::string name,bool white);
     ~Player() = default;
+    virtual bool compute_move(Board &board);
     std::string get_name();
+    void win();
+    void loose();
+    void draw();
   private:
     std::string name_;
+    bool white_;
 };
 } /* game */
 

@@ -53,9 +53,10 @@ castling:
 
 ### classic moves
 
-the game seems playble in most of cases , the check features may not finished
-at 100% (may need little tweaks)
-checkmate is ok.
+classic game of chess ,
+boting on the way
+some feature still missing
+not a big deal tho
 
 ## future features
 
@@ -72,6 +73,8 @@ the column or row is specify in the notation which not implemented now
 ### draw
 check about stalemate , 50 rule etc
 
+may keep track of the game with a manager to do all the dirty work
+
 ### nice features
 
 -save and load games,
@@ -81,15 +84,21 @@ check about stalemate , 50 rule etc
 
 ### first goal
 
-just make a boat with random moves
+just make a bot with random moves
+bearly work ~ named *jeff*
 
 ### second goal
 
-a bot with minimal heuristic not tree
+a bot with minimal heuristic
+link a value to a moves and select the best
+named *victor*
 
 ### third goal
 
-a bot with minimal heuristic , tree
+a bot with minimal heuristic,
+expand the second in a tree!
+named *no_name_for_now*
 
 ### add prom moves for futur bots
+
 need to add promotion move for bots

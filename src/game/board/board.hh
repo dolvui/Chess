@@ -29,6 +29,8 @@ namespace game {
         int is_move_legal(bool white, bool check, int x_start,
                           int y_start, int x_end,int y_end);
         std::list<std::pair<int, int>> get_legal_moves(bool white);
+        std::list<std::pair<std::pair<int, int>, std::pair<int, int>>>
+        get_bot_legal_moves(bool white);
     private:
         std::array<Piece *, 64> board_;
         Piece *hold_white_;

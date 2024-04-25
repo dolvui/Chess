@@ -22,9 +22,9 @@ int main() {
     std::cout << "\nblack name: ";
     std::cin >> name2;
 
-    game::Player white_player = game::Player(name1);
-    game::Player black_player = game::Player(name2);
-
+    game::Player white_player = game::Player(name1,true);
+    game::Player black_player = game::Player(name2,false);
+//    game::Bot bot = game::Bot();
     game::Game G = game::Game(b, white_player, black_player);
 
     b.print_board();
