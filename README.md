@@ -68,7 +68,8 @@ a move like :
     Rb4
 become:
     Rbeb4 or R3b4
-the column or row is specify in the notation which not implemented now
+> [!WARNING]
+> the column or row is specify in the notation which not implemented now
 
 ### draw
 check about stalemate , 50 rule etc
@@ -85,7 +86,9 @@ may keep track of the game with a manager to do all the dirty work
 ### first goal
 
 just make a bot with random moves
-bearly work ~ named *jeff*
+> [!NOTE]
+> bearly work ~
+named *jeff*
 
 ### second goal
 
@@ -102,3 +105,138 @@ named *no_name_for_now*
 ### add prom moves for futur bots
 
 need to add promotion move for bots
+
+# game's behavior exemple:
+```
+white name: dolvui
+
+black name: not_dolvui
+
+8;|r||n||b||q||k||b||n||r|
+7;|p||p||p||p||p||p||p||p|
+6;| || || || || || || || |
+5;| || || || || || || || |
+4;| || || || || || || || |
+3;| || || || || || || || |
+2;|P||P||P||P||P||P||P||P|
+1;|R||N||B||Q||K||B||N||R|
+  ------------------------
+  |a||b||c||d||e||f||g||h|
+you got 20 legal moves, use it with wisdom ..
+
+
+ dolvui with the white pieces to move: e4
+
+8;|r||n||b||q||k||b||n||r|
+7;|p||p||p||p||p||p||p||p|
+6;| || || || || || || || |
+5;| || || || || || || || |
+4;| || || || ||P|| || || |
+3;| || || || || || || || |
+2;|P||P||P||P|| ||P||P||P|
+1;|R||N||B||Q||K||B||N||R|
+  ------------------------
+  |a||b||c||d||e||f||g||h|
+you got 20 legal moves, use it with wisdom ..
+
+
+ not_dolvui with the black pieces to move: e5
+
+8;|r||n||b||q||k||b||n||r|
+7;|p||p||p||p|| ||p||p||p|
+6;| || || || || || || || |
+5;| || || || ||p|| || || |
+4;| || || || ||P|| || || |
+3;| || || || || || || || |
+2;|P||P||P||P|| ||P||P||P|
+1;|R||N||B||Q||K||B||N||R|
+  ------------------------
+  |a||b||c||d||e||f||g||h|
+you got 29 legal moves, use it with wisdom ..
+
+
+ dolvui with the white pieces to move: Bb5
+
+8;|r||n||b||q||k||b||n||r|
+7;|p||p||p||p|| ||p||p||p|
+6;| || || || || || || || |
+5;| ||B|| || ||p|| || || |
+4;| || || || ||P|| || || |
+3;| || || || || || || || |
+2;|P||P||P||P|| ||P||P||P|
+1;|R||N||B||Q||K|| ||N||R|
+  ------------------------
+  |a||b||c||d||e||f||g||h|
+you got 26 legal moves, use it with wisdom ..
+
+
+ not_dolvui with the black pieces to move: Nc6
+
+8;|r|| ||b||q||k||b||n||r|
+7;|p||p||p||p|| ||p||p||p|
+6;| || ||n|| || || || || |
+5;| ||B|| || ||p|| || || |
+4;| || || || ||P|| || || |
+3;| || || || || || || || |
+2;|P||P||P||P|| ||P||P||P|
+1;|R||N||B||Q||K|| ||N||R|
+  ------------------------
+  |a||b||c||d||e||f||g||h|
+you got 32 legal moves, use it with wisdom ..
+
+
+ dolvui with the white pieces to move: Qf3
+
+8;|r|| ||b||q||k||b||n||r|
+7;|p||p||p||p|| ||p||p||p|
+6;| || ||n|| || || || || |
+5;| ||B|| || ||p|| || || |
+4;| || || || ||P|| || || |
+3;| || || || || ||Q|| || |
+2;|P||P||P||P|| ||P||P||P|
+1;|R||N||B|| ||K|| ||N||R|
+  ------------------------
+  |a||b||c||d||e||f||g||h|
+you got 30 legal moves, use it with wisdom ..
+
+
+ not_dolvui with the black pieces to move: Na5
+
+8;|r|| ||b||q||k||b||n||r|
+7;|p||p||p||p|| ||p||p||p|
+6;| || || || || || || || |
+5;|n||B|| || ||p|| || || |
+4;| || || || ||P|| || || |
+3;| || || || || ||Q|| || |
+2;|P||P||P||P|| ||P||P||P|
+1;|R||N||B|| ||K|| ||N||R|
+  ------------------------
+  |a||b||c||d||e||f||g||h|
+you got 42 legal moves, use it with wisdom ..
+
+
+ dolvui with the white pieces to move: Qf7
+
+8;|r|| ||b||q||k||b||n||r|
+7;|p||p||p||p|| ||Q||p||p|
+6;| || || || || || || || |
+5;|n||B|| || ||p|| || || |
+4;| || || || ||P|| || || |
+3;| || || || || || || || |
+2;|P||P||P||P|| ||P||P||P|
+1;|R||N||B|| ||K|| ||N||R|
+  ------------------------
+  |a||b||c||d||e||f||g||h|
+you got 0 legal moves, use it with wisdom ..
+
+ no legal moves
+
+
+ dolvui win by checkmate
+
+
+ not_dolvui was defeated ;(
+
+
+ End of the game
+```
