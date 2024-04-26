@@ -31,6 +31,8 @@ namespace game {
         std::list<std::pair<int, int>> get_legal_moves(bool white);
         std::list<std::pair<std::pair<int, int>, std::pair<int, int>>>
         get_bot_legal_moves(bool white);
+        bool is_in_check(bool white);
+        bool not_enough_material();
     private:
         std::array<Piece *, 64> board_;
         Piece *hold_white_;

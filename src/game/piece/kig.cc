@@ -19,40 +19,40 @@ namespace game {
 
       if (legit(x_ + 1, y_) &&
           board.is_move_legal(white_, legal,x_, y_, x_ + 1, y_) &&
-          board.is_adv_piece_capt(x_ + 1,y_,white_))
+          board.is_adv_piece_one(x_ + 1,y_,white_))
             rep.push_front(std::pair<int, int>(x_ + 1, y_));
 
       if (legit(x_ - 1, y_) &&
           board.is_move_legal(white_, legal,x_, y_, x_ - 1, y_) &&
-          board.is_adv_piece_capt(x_ - 1,y_,white_))
+          board.is_adv_piece_one(x_ - 1,y_,white_))
             rep.push_front(std::pair<int, int>(x_ - 1, y_));
       if (legit(x_, y_ +1 ) &&
           board.is_move_legal(white_, legal,x_, y_, x_, y_ + 1) &&
-          board.is_adv_piece_capt(x_,y_+ 1,white_))
+          board.is_adv_piece_one(x_,y_+ 1,white_))
             rep.push_front(std::pair<int, int>(x_, y_ + 1));
       if (legit(x_, y_ -1) &&
           board.is_move_legal(white_, legal,x_, y_, x_, y_ - 1) &&
-          board.is_adv_piece_capt(x_,y_ - 1,white_))
+          board.is_adv_piece_one(x_,y_ - 1,white_))
             rep.push_front(std::pair<int, int>(x_, y_ - 1));
 
       if (legit(x_ + 1, y_ + 1) &&
           board.is_move_legal(white_, legal,x_, y_, x_ + 1, y_ + 1) &&
-          board.is_adv_piece_capt(x_ + 1, y_ + 1,white_))
+          board.is_adv_piece_one(x_ + 1, y_ + 1,white_))
             rep.push_front(std::pair<int, int>(x_ + 1, y_ + 1));
 
       if (legit(x_ + 1, y_ - 1) &&
           board.is_move_legal(white_, legal,x_, y_, x_ + 1, y_ -1 ) &&
-          board.is_adv_piece_capt(x_ + 1,y_ - 1,white_))
+          board.is_adv_piece_one(x_ + 1,y_ - 1,white_))
             rep.push_front(std::pair<int, int>(x_ + 1, y_ - 1));
 
       if (legit(x_ - 1, y_ + 1) &&
           board.is_move_legal(white_, legal,x_, y_, x_ - 1, y_ + 1) &&
-          board.is_adv_piece_capt(x_ - 1,y_ + 1,white_))
+          board.is_adv_piece_one(x_ - 1,y_ + 1,white_))
             rep.push_front(std::pair<int, int>(x_ - 1, y_ + 1));
 
       if (legit(x_ - 1, y_ - 1) &&
           board.is_move_legal(white_, legal,x_, y_, x_ - 1, y_ -1 ) &&
-          board.is_adv_piece_capt(x_ - 1,y_ - 1,white_))
+          board.is_adv_piece_one(x_ - 1,y_ - 1,white_))
             rep.push_front(std::pair<int, int>(x_ - 1, y_ - 1));
 
       if (is_started &&  board.can_big_castle(x_, y_, x_ - 2) &&

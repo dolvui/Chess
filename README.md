@@ -21,7 +21,7 @@ pawn:
 
     [letter][number]
     ex: e4
-    [letter][number][=][PROM]
+    [letter][number][=][FIGURE]
     ex: e8=Q
 
 figures:
@@ -75,9 +75,15 @@ become:
 > [!WARNING]
 > En passant not implement for now
 
+> [!WARNING]
+> A move that not follow the notation is a undefined behavior
+> and will mostly output a non-valid move
 
 ### draw
-check about stalemate , 50 rule etc
+check 50 rule
+
+> [!NOTE]
+> 'stalemate' and 'insufficient mating material' is mostly implemented
 
 may keep track of the game with a manager to do all the dirty work
 
@@ -91,6 +97,7 @@ may keep track of the game with a manager to do all the dirty work
 ### first goal
 
 just make a bot with random moves
+
 > [!NOTE]
 > seems to work
 named *jeff*
@@ -103,7 +110,7 @@ named *victor*
 
 ### third goal
 
-a bot with minimal heuristic,
+a bot with  heuristic,
 expand the second in a tree!
 named *no_name_for_now*
 
@@ -111,10 +118,13 @@ named *no_name_for_now*
 
 need to add promotion move for bots
 
+> [!TIP]
+> auto-promotion in Queen for now
+
 # game's behavior exemple:
 
-> [!IMPORTANT]
-> right now the game is played white_player vs black_player
+> [!TIP]
+> You now can select who play vs who (player and bot)
 
 ```
   -white--|--black-

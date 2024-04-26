@@ -48,7 +48,7 @@ int main() {
         black_player = new game::Player(name2,false);
     }
     else {
-        black_bot = new game::Bot("Jeff",false);
+        black_bot = new game::Bot("Jeffrey",false);
     }
 
     auto g = game::Game(b,white_player,black_player,white_bot,black_bot);

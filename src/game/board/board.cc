@@ -119,13 +119,13 @@ namespace game
         if (board_.at(start) && tolower(board_.at(start)->get_piece()) == 'p') {
             if (!board_.at(start)->is_white() &&
                 board_.at(start)->get_y() == 6) {
-            promote(start, end, 'q');
-            return 0;
-          }
-          if (board_.at(start)->is_white() && board_.at(start)->get_y() == 1) {
-              promote(start, end, 'Q');
-              return 0;
-          }
+                promote(start, end, 'q');
+                return 0;
+            }
+            if (board_.at(start)->is_white() && board_.at(start)->get_y() == 1) {
+                promote(start, end, 'Q');
+                return 0;
+            }
         }
 
         board_.at(end) = board_.at(start);
@@ -328,112 +328,142 @@ namespace game
         return 0;
     }
 
-    int Board::is_move_legal(bool white, bool check, int x_start, int y_start,
-                             int x_end, int y_end) {
-        if (check == false)
-            return true;
-        int start = y_start * 8 + x_start;
-        int dest = y_end * 8 + x_end;
-        if (x_start < 0 || x_start > 7 || x_end < 0 || x_end > 7 ||
-            y_start < 0 || y_start > 7 || y_end < 0 || y_end > 7 ||
-            start < 0 || start >= 64 || dest < 0 || dest >= 64)
-            return false;
-        auto piece_start = board_.at(start);
-        auto piece_dest = board_.at(dest);
-
-        if (board_.at(dest) && !(board_.at(dest)->is_white() ^ white))
-            return false;
-
-        board_.at(start) = nullptr;
-        board_.at(dest) = piece_start;
+    bool Board::is_in_check(bool white) {
         for (int i = 0 ; i < 64 ; i++) {
             if (board_.at(i)
                 && (board_.at(i)->is_white() ^ white)) {
                 auto l = board_.at(i)->compute_move(*this, false);
-                // std::cout << board_.at(i)->get_piece() << "("
-           //           << board_.at(i)->get_x() << "," << board_.at(i)->get_y()
-                //           << "): "
-//                        << l.size() << "\n";
                 for (auto move : l) {
                     int pos = move.second * 8 + move.first;
                     if (board_.at(pos) &&
                         tolower(board_.at(pos)->get_piece()) == 'k') {
-                        // std::cout << "this piece see the king at " << i
-                        //           << " "
-                        //           << board_.at(i)->get_piece() << "\n";
-                        board_.at(start) = piece_start;
-                        board_.at(dest) = piece_dest;
-                        return false;
+                        return true;
                     }
                 }
             }
         }
-
-        board_.at(start) = piece_start;
-        board_.at(dest) = piece_dest;
-        return true;
-    }
-
-    bool Board::is_adv_piece(int i, int j, bool white) {
-        int pos = (j * 8 + i);
-        auto p = board_.at(pos);
-        return !p;
-        if(p)
-            return (p->is_white() ^ white);
-        return true;
-    }
-
-    bool Board::is_adv_piece_capt(int i, int j, bool white) {
-        int pos = (j * 8 + i);
-        auto p = board_.at(pos);
-        if(p)
-            return (p->is_white() ^ white);
         return false;
     }
 
-    bool Board::is_adv_piece_one(int i, int j, bool white) {
-        int pos = (j * 8 + i);;
-
-        auto p =  board_.at(pos);
-        if(p)
-            return (p->is_white() ^ white);
-        return true;
-    }
-
-    bool Board::is_capt_piece(int i, int j, bool white) {
-        int pos = (j * 8 + i);
-        if (pos < 0 || pos >= 64)
+    bool Board::not_enough_material() {
+      for (int i = 0; i < 64; i++) {
+          auto p = board_.at(i);
+          if (p && (tolower(p->get_piece()) == 'p'
+                    || tolower(p->get_piece()) == 'r'
+                    || tolower(p->get_piece()) == 'q'))
             return false;
-        auto p = board_.at(pos);
-        return p && p->is_white() ^ white;
-    }
-    bool Board::is_piece_move(int i, int j, bool white) {
-        int pos = (j * 8 + i);
-        auto p = board_.at(pos);
-        return !p;
 
+      }
+      return true;
     }
-    bool Board::can_big_castle(int x, int y, int new_x) {
-        int start = y * 8 + x;
-        int end = y * 8 + new_x;
 
-        if (board_.at(start - 1) || board_.at(start - 2) ||
-            board_.at(start - 3) ||
-            (board_.at(start - 4) && !board_.at(start - 4 )->get_started())){
+    int Board::is_move_legal(bool white, bool check, int x_start,
+                                 int y_start, int x_end, int y_end)
+        {
+            if (check == false)
+                return true;
+            int start = y_start * 8 + x_start;
+            int dest = y_end * 8 + x_end;
+            if (x_start < 0 || x_start > 7 || x_end < 0 || x_end > 7 ||
+                y_start < 0 || y_start > 7 || y_end < 0 || y_end > 7 ||
+                start < 0 || start >= 64 || dest < 0 || dest >= 64)
+                return false;
+            auto piece_start = board_.at(start);
+            auto piece_dest = board_.at(dest);
+
+            if (board_.at(dest) && !(board_.at(dest)->is_white() ^ white))
+                return false;
+
+            board_.at(start) = nullptr;
+            board_.at(dest) = piece_start;
+            for (int i = 0 ; i < 64 ; i++) {
+                if (board_.at(i)
+                    && (board_.at(i)->is_white() ^ white)) {
+                    auto l = board_.at(i)->compute_move(*this, false);
+                    // std::cout << board_.at(i)->get_piece() << "("
+                    //           << board_.at(i)->get_x() << "," << board_.at(i)->get_y()
+                    //           << "): "
+//                        << l.size() << "\n";
+                    for (auto move : l) {
+                        int pos = move.second * 8 + move.first;
+                        if (board_.at(pos) &&
+                            tolower(board_.at(pos)->get_piece()) == 'k') {
+                            // std::cout << "this piece see the king at " << i
+                            //           << " "
+                            //           << board_.at(i)->get_piece() << "\n";
+                            board_.at(start) = piece_start;
+                            board_.at(dest) = piece_dest;
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            board_.at(start) = piece_start;
+            board_.at(dest) = piece_dest;
+            return true;
+        }
+
+        bool Board::is_adv_piece(int i, int j, bool white) {
+            int pos = (j * 8 + i);
+            auto p = board_.at(pos);
+            return !p;
+            if(p)
+                return (p->is_white() ^ white);
+            return true;
+        }
+
+        bool Board::is_adv_piece_capt(int i, int j, bool white) {
+            int pos = (j * 8 + i);
+            auto p = board_.at(pos);
+            if(p)
+                return (p->is_white() ^ white);
             return false;
         }
-        //std::cout << "can big !!!!\n";
-        return true;
-    }
-    bool Board::can_lil_castle(int x, int y, int new_x) {
-        int start = y * 8 + x;
-        int end = y * 8 + new_x;
 
-        if (board_.at(start + 1) || board_.at(start + 2) ||
-            (board_.at(start + 3) && !board_.at(start + 3)->get_started())){
-            return false;
+        bool Board::is_adv_piece_one(int i, int j, bool white) {
+            int pos = (j * 8 + i);;
+
+            auto p =  board_.at(pos);
+            if(p)
+                return (p->is_white() ^ white);
+            return true;
         }
-        //std::cout << "can little !!!!\n";
-        return true;
-    }
-} /* game */
+
+        bool Board::is_capt_piece(int i, int j, bool white) {
+            int pos = (j * 8 + i);
+            if (pos < 0 || pos >= 64)
+                return false;
+            auto p = board_.at(pos);
+            return p && p->is_white() ^ white;
+        }
+        bool Board::is_piece_move(int i, int j, bool white) {
+            int pos = (j * 8 + i);
+            auto p = board_.at(pos);
+            return !p;
+
+        }
+        bool Board::can_big_castle(int x, int y, int new_x) {
+            int start = y * 8 + x;
+            int end = y * 8 + new_x;
+
+            if (board_.at(start - 1) || board_.at(start - 2) ||
+                board_.at(start - 3) ||
+                (board_.at(start - 4) && !board_.at(start - 4 )->get_started())){
+                return false;
+            }
+            //std::cout << "can big !!!!\n";
+            return true;
+        }
+        bool Board::can_lil_castle(int x, int y, int new_x) {
+            int start = y * 8 + x;
+            int end = y * 8 + new_x;
+
+            if (board_.at(start + 1) || board_.at(start + 2) ||
+                (board_.at(start + 3) && !board_.at(start + 3)->get_started())){
+                return false;
+            }
+            //std::cout << "can little !!!!\n";
+            return true;
+        }
+    } /* game */
