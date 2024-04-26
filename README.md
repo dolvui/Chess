@@ -117,6 +117,14 @@ need to add promotion move for bots
 > right now the game is played white_player vs black_player
 
 ```
+  -white--|--black-
+1. player vs player
+2. player vs bot
+3. bot    vs player
+4. bot    vs bot
+
+mode: 1
+
 white name: dolvui
 
 black name: not_dolvui

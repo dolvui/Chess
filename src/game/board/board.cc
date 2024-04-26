@@ -273,14 +273,14 @@ namespace game
             if (board_.at(i)) {
                 if (!(board_.at(i)->is_white() ^ white)) {
                     auto l = board_.at(i)->compute_move(*this,true);
-                    std::cout << "for the "
-                              << board_.at(i)->get_piece()
-                              << " in " << i << " :\n";
+                    // std::cout << "for the "
+                    //           << board_.at(i)->get_piece()
+                    //           << " in " << i << " :\n";
                     for (auto m : l) {
-                        std::cout << board_.at(i)->get_x()
-                                  << ","
-                                  << board_.at(i)->get_y()
-                             <<" to " << m.first << "," << m.second << "\n";
+                        // std::cout << board_.at(i)->get_x()
+                        //           << ","
+                        //           << board_.at(i)->get_y()
+                        //      <<" to " << m.first << "," << m.second << "\n";
                     }
                     rep.merge(l);
                 };

@@ -12,24 +12,46 @@
 #include "bot/bot.hh"
 
 int main() {
+    std::cout <<"\n  -white--|--black-\n";
+    std::cout << "1. player vs player\n";
+    std::cout << "2. player vs bot\n";
+    std::cout << "3. bot    vs player\n";
+    std::cout << "4. bot    vs bot\n\n";
+
+    std::cout << "mode: ";
+
+    int mode;
+
+    std::cin >> mode;
+
+    game::Player* white_player =  nullptr;;
+    game::Player *black_player = nullptr;
+    game::Bot* white_bot =  nullptr;;
+    game::Bot* black_bot = nullptr;
+    game::Board b = game::Board();
 
     std::string name1;
     std::string name2;
 
-    std::cout << "\nwhite name: ";
-    std::cin >> name1;
+    if (mode <= 2) {
+        std::cout << "\nwhite name: ";
+        std::cin >> name1;
+        white_player = new game::Player(name1,true);
+    }
+    else {
+        white_bot = new game::Bot("Jeff",true);
+    }
 
-    std::cout << "\nblack name: ";
-    std::cin >> name2;
+    if (mode % 2 == 1) {
+        std::cout << "\black name: ";
+        std::cin >> name2;
+        black_player = new game::Player(name2,false);
+    }
+    else {
+        black_bot = new game::Bot("Jeff",false);
+    }
 
-    game::Player white_player = game::Player(name1,true);
-    game::Player black_player = game::Player(name2,false);
-
-    game::Board b = game::Board();
-    game::Bot bot = game::Bot("jeff", false);
-//        game::Bot bot2 = game::Bot("jeffrey",true);
-    // game::Game G = game::Game(b, white_player, nullptr, nullptr, bot);
-    auto g = game::Game(b,&white_player,&black_player,nullptr,nullptr);
+    auto g = game::Game(b,white_player,black_player,white_bot,black_bot);
     b.print_board();
     g.play();
 
