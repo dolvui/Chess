@@ -16,7 +16,7 @@ Game::Game(Board& board, game::Player* white_player, game::Player* black_player,
     void Game::play() {
         int move = 0;
 
-        while (true) {
+        while (move < 120) {
           if (white_player_ && !white_player_->compute_move(board_) ||
               white_bot_ && !white_bot_->compute_move(board_)) {
 

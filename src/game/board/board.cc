@@ -114,12 +114,27 @@ namespace game
             std::cout << "\n This move not valid , try a other one !\n";
             return 1;
         }
-//      std::cout << "start: " << start << "end: " << end<<"\n";
+        //      std::cout << "start: " << start << "end: " << end<<"\n";
+
+        if (board_.at(start) && tolower(board_.at(start)->get_piece()) == 'p') {
+          if (!board_.at(start)->is_white() && board_.at(start)->get_y() == 6) {
+            promote(start, end, 'Q');
+            return 0;
+          }
+          if (board_.at(start)->is_white() && board_.at(start)->get_y() == 1) {
+              promote(start, end, 'q');
+              return 0;
+          }
+        }
+
         board_.at(end) = board_.at(start);
         board_.at(start) = nullptr;
-        board_.at(end)->set_pos(end);
-        board_.at(end)->has_moved();
-        if (tolower(board_.at(end)->get_piece()) == 'k' &&
+        if (board_.at(end)) {
+            board_.at(end)->set_pos(end);
+            board_.at(end)->has_moved();
+        }
+
+        if (board_.at(end) && tolower(board_.at(end)->get_piece()) == 'k' &&
             abs(end - start) == 2) {
             //std::cout << abs(end - start) << "\n";
             if (end - start < 0) {
@@ -153,7 +168,7 @@ namespace game
     }
 
     int Board::promote(int start, int end, char prom) {
-        if (start >= 64 || start < 0 || end >= 64 || end < 0 || end < 56 ) {
+        if ( (end < 0 && end  > 7) || (end < 56 && end > 64) ) {
             std::cout << " The Promotion is not legit!\n";
             return 1;
         }

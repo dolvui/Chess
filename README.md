@@ -252,3 +252,29 @@ you got 0 legal moves, use it with wisdom ..
 
  End of the game
 ```
+
+# Complexity
+
+here some points :
+```
+x in nb of games
+y in milliseconds
+
+(1,70)
+(10,645)
+(300,19197)
+(600,32350)
+(1000,58446)
+(1800,83499)
+(2000,102078)
+(2500,141559)
+(5000,277788)
+(10000,541299)
+(50000,2695755)
+
+test with print enable ,
+
+aproximation with a linar function:
+
+O(x) =~ 54x + 462
+```

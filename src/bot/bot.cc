@@ -1,4 +1,6 @@
 #include "bot.hh"
+#include <cstdlib>
+#include <ctime>
 #include <iostream>
 
 namespace game {
@@ -12,7 +14,8 @@ bool Bot::compute_move(Board &board) {
       auto m = board.get_bot_legal_moves(white_);
       auto it = m.cbegin();
       if (m.size() == 0)
-          return false;
+        return false;
+      srand(time(NULL));
       int random = rand() % m.size();
       std::advance(it, random);
       std::cout << "\n the bot : " << it->first.first << " , "
