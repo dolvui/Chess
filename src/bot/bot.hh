@@ -6,14 +6,15 @@
 #include "../game/board/board.hh"
 namespace game
 {
-    class Bot : Player{
-public:
+    class Bot : public Player{
+    public:
         Bot(std::string name,bool white);
-        ~Bot() = default;
+        // Bot(){};
+        // ~Bot(){};
         bool compute_move(Board& board) override;
-        std::string get_name();
-    private:
-        std::string name_;
-        bool white_;
+        //std::string get_name();
+    // private:
+    //     std::string name_;
+    //     bool white_;
 };
 } /* game */

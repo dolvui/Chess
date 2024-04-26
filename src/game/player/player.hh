@@ -16,7 +16,7 @@ public:
     void win();
     void loose();
     void draw();
-  private:
+  protected:
     std::string name_;
     bool white_;
 };

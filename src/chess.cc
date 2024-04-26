@@ -9,6 +9,7 @@
 #include "game/piece/kig.hh"
 #include "game/piece/pawn.hh"
 #include "game/player/player.hh"
+#include "bot/bot.hh"
 
 int main() {
     game::Board b = game::Board();
@@ -23,11 +24,12 @@ int main() {
     std::cin >> name2;
 
     game::Player white_player = game::Player(name1,true);
-    game::Player black_player = game::Player(name2,false);
-//    game::Bot bot = game::Bot();
-    game::Game G = game::Game(b, white_player, black_player);
-
+    //game::Player black_player = game::Player(name2,false);
+    game::Bot bot = game::Bot("jeff", false);
+    game::Bot bot2 = game::Bot("jeffrey",true);
+    //game::Game G = game::Game(b, white_player, nullptr, nullptr, bot);
+    auto g = game::Game(b,&white_player,nullptr,nullptr,&bot);
     b.print_board();
-    G.play();
+    g.play();
     return 0;
 }
