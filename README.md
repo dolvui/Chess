@@ -49,6 +49,21 @@ castling:
         or
         O-O-O
 
+ambiguous moves:
+    spec:
+    number or letter that represent a row or column to avoid ambiguity
+    work for pawn and figures
+
+    [FIGURES][spec][letter][number]
+    ex:
+    Reb6
+    R3b6
+
+    [spec][letter][number]
+    ex:
+    cd5
+    be3
+
 ## description of the current version
 
 ### classic moves
@@ -57,9 +72,6 @@ classic game of chess ,
 boting on the way
 some feature still missing
 not a big deal tho
-
-> [!WARNING]
-> The column or row is specify in the notation which implemented but has not been tested
 
 > [!NOTE]
 > 'stalemate' and 'insufficient mating material' is mostly implemented
@@ -119,6 +131,9 @@ need to add promotion move for bots
 
 > [!TIP]
 > You now can select who play vs who (player and bot)
+
+> [!NOTE]
+> if you select '4' (bot vs bot) , you become spectator of two bot playing randomly
 
 ```
   -white--|--black-

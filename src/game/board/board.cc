@@ -225,11 +225,11 @@ namespace game
         board_.at(end)->set_pos(end);
         return 0;
     }
-    std::pair<int, int> get_spec(char spec) {
+    std::pair<int, int>* get_spec(char spec) {
       if (std::isdigit(spec)) {
-          return std::pair<int,int>(-1,spec - '0');
+          return new std::pair<int,int>(-1,spec - '0');
       }
-      return std::pair<int,int>(-1,spec - 'a');
+      return new std::pair<int,int>(-1,spec - 'a');
     }
     int Board::compute_move(std::string move_not,bool white) {
         std::string piece;
@@ -243,16 +243,24 @@ namespace game
         if (islower(move_not[0])) {
             piece = "P";
             destination = move_not.substr(0, 2);
-            if (move_not.length() == 4) {
+            if (move_not.length() == 4 && move_not[2] == '=') {
                 int dest = convert(destination[0],destination[1]);
                 int start = find_start(piece[0], white, dest,nullptr);
                 return promote(start,dest,move_not[3]);
             }
+            else if(move_not.length() == 3){ // cd5
+                char spec = move_not[0];
+                pair = get_spec(spec);
+                //piece = move_not.substr(0, 1);
+                destination = move_not.substr(1, 2);
+                int dest = convert(destination[0],destination[1]);
+                int start = find_start(piece[0], white, dest,pair);
+                return move(start,dest);
+            }
         } else {
           if (move_not.size() == 4) { // Reb6
             char spec = move_not[1];
-            auto pairs = get_spec(spec);
-            pair = &pairs;
+            pair = get_spec(spec);
             piece = move_not.substr(0, 1);
             destination = move_not.substr(2, 3);
           }
@@ -260,8 +268,8 @@ namespace game
                 piece = move_not.substr(0, 1);
                 destination = move_not.substr(1, 2);
             }
-            piece = move_not.substr(0, 1);
-            destination = move_not.substr(1, 2);
+            // piece = move_not.substr(0, 1);
+            // destination = move_not.substr(1, 2);
         }
         int dest = convert(destination[0],destination[1]);
         int start = find_start(piece[0], white, dest,pair);
@@ -276,10 +284,12 @@ namespace game
                 auto l = board_.at(i)->compute_move(*this,true);
                 for (auto m : l) {
                   if (m.second * 8 + m.first == dest) {
-                    if (!pair)
-                      return i;
-                    else if (pair->first == m.first || pair->second == m.second)
-                        return i;
+                      //   std::cout << pair->first << " = " << m.first <<
+                      //       " and "<<pair->second << " = "<<m.second << "\n";
+                      if (!pair)
+                          return i;
+                      else if (pair->first == i/8 || pair->second == i%8)
+                          return i;
                   }
                 }
             }
@@ -293,14 +303,14 @@ namespace game
             if (board_.at(i)) {
                 if (!(board_.at(i)->is_white() ^ white)) {
                     auto l = board_.at(i)->compute_move(*this,true);
-                    std::cout << "for the "
-                              << board_.at(i)->get_piece()
-                              << " in " << i << " :\n";
+                    // std::cout << "for the "
+                    //           << board_.at(i)->get_piece()
+                    //           << " in " << i << " :\n";
                     for (auto m : l) {
-                        std::cout << board_.at(i)->get_x()
-                                  << ","
-                                  << board_.at(i)->get_y()
-                             <<" to " << m.first << "," << m.second << "\n";
+                        // std::cout << board_.at(i)->get_x()
+                        //           << ","
+                        //           << board_.at(i)->get_y()
+                        //      <<" to " << m.first << "," << m.second << "\n";
                     }
                     rep.merge(l);
                 };
@@ -317,14 +327,14 @@ namespace game
             if (board_.at(i)) {
                 if (!(board_.at(i)->is_white() ^ white)) {
                   auto l = board_.at(i)->compute_move(*this, true);
-                  std::cout << "for the "
-                              << board_.at(i)->get_piece()
-                              << " in " << i << " :\n";
+                  // std::cout << "for the "
+                  //             << board_.at(i)->get_piece()
+                  //             << " in " << i << " :\n";
                   for (auto m : l) {
-                      std::cout << board_.at(i)->get_x()
-                                  << ","
-                                  << board_.at(i)->get_y()
-                             <<" to " << m.first << "," << m.second << "\n";
+                      // std::cout << board_.at(i)->get_x()
+                      //             << ","
+                      //             << board_.at(i)->get_y()
+                      //        <<" to " << m.first << "," << m.second << "\n";
                         auto p_start = std::pair<int, int>
                             (board_.at(i)->get_x(),board_.at(i)->get_y());
                         auto p_end = std::pair<int, int>(m.first,m.second);
