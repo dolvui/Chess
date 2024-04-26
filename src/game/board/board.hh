@@ -15,7 +15,8 @@ namespace game {
         int  move(int start,int end);
         void print_board();
         int compute_move(std::string move_not, bool white);
-        int find_start(char piece, bool white, int dest);
+        int find_start(char piece, bool white, int dest,
+                       std::pair<int,int>* pair);
         bool is_adv_piece(int x, int y, bool white);
         bool is_capt_piece(int i, int j, bool white);
         bool is_piece_move(int i, int j, bool white);

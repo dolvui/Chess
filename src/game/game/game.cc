@@ -19,7 +19,7 @@ Game::Game(Board& board, game::Player* white_player, game::Player* black_player,
         while (true) {
           if (white_player_ && !white_player_->compute_move(board_) ||
               white_bot_ && !white_bot_->compute_move(board_)) {
-            if (board_.is_in_check(false)) {
+            if (!board_.is_in_check(true)) {
                 std::cout << "\n Nice stalemate ! \n   DRAW   \n";
                 break;
             }
@@ -33,11 +33,15 @@ Game::Game(Board& board, game::Player* white_player, game::Player* black_player,
               else
                   white_bot_->loose();
               break;
+          }
+           if (board_.not_enough_material()) {
+                std::cout << "\n Not enough materials ! \n   DRAW   \n";
+                break;
             }
             move++;
             if (black_player_ && !black_player_->compute_move(board_) ||
                 black_bot_ && !black_bot_->compute_move(board_)) {
-              if (board_.is_in_check(true)) {
+              if (!board_.is_in_check(false)) {
                   std::cout << "\n Nice stalemate ! \n   DRAW   \n";
                     break;
                 }

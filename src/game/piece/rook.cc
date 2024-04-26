@@ -24,7 +24,8 @@ Rook::compute_move(game::Board& board, bool legal) {
           i++;
       }
 
-      if (legit(i,y_) && board.is_adv_piece_capt(i, y_, white_))
+      if (legit(i, y_) && board.is_move_legal(white_, legal, x_, y_, i, y_) &&
+          board.is_adv_piece_capt(i, y_, white_))
           rep.push_front(std::pair<int, int>(i, y_));
 
       int j = y_ + 1;
@@ -34,7 +35,8 @@ Rook::compute_move(game::Board& board, bool legal) {
           j++;
       }
 
-      if (legit(x_,j) && board.is_adv_piece_capt(x_, j, white_))
+      if (legit(x_, j) && board.is_move_legal(white_, legal, x_, y_, x_, j) &&
+          board.is_adv_piece_capt(x_, j, white_))
           rep.push_front(std::pair<int, int>(x_, j));
 
       i = x_ - 1;
@@ -44,7 +46,8 @@ Rook::compute_move(game::Board& board, bool legal) {
           i--;
       }
 
-      if (legit(i,y_) && board.is_adv_piece_capt(i, y_, white_))
+      if (legit(i, y_) && board.is_move_legal(white_, legal, x_, y_, i, y_) &&
+          board.is_adv_piece_capt(i, y_, white_))
             rep.push_front(std::pair<int, int>(i, y_));
 
       j = y_ - 1;
@@ -53,7 +56,8 @@ Rook::compute_move(game::Board& board, bool legal) {
           rep.push_front(std::pair<int, int>(x_, j));
           j--;
       }
-        if (legit(x_,j) && board.is_adv_piece_capt(x_, j, white_))
+      if (legit(x_, j) && board.is_move_legal(white_, legal, x_, y_, x_, j) &&
+          board.is_adv_piece_capt(x_, j, white_))
             rep.push_front(std::pair<int, int>(x_, j));
 
         return rep;

@@ -58,19 +58,15 @@ boting on the way
 some feature still missing
 not a big deal tho
 
+> [!WARNING]
+> The column or row is specify in the notation which implemented but has not been tested
+
+> [!NOTE]
+> 'stalemate' and 'insufficient mating material' is mostly implemented
+
 ## future features
 
 ### specify move
-
-when 2 pieces can make the same move,
-for instance , two rook can move at the same square,
-a move like :
-    Rb4
-become:
-    Rbeb4 or R3b4
-
-> [!WARNING]
-> The column or row is specify in the notation which not implemented now
 
 > [!WARNING]
 > En passant not implement for now
@@ -80,10 +76,8 @@ become:
 > and will mostly output a non-valid move
 
 ### draw
-check 50 rule
 
-> [!NOTE]
-> 'stalemate' and 'insufficient mating material' is mostly implemented
+check 50 rule
 
 may keep track of the game with a manager to do all the dirty work
 

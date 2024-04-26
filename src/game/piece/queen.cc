@@ -24,7 +24,8 @@ namespace game {
             rep.push_front(std::pair<int, int>(i, y_));
             i++;
         }
-        if (legit(i,j) && board.is_adv_piece_capt(i, j, white_))
+        if (legit(i, j) && board.is_move_legal(white_, legal, x_, y_, i, j) &&
+            board.is_adv_piece_capt(i, j, white_))
             rep.push_front(std::pair<int, int>(i, j));
 
         i = x_;
@@ -35,7 +36,8 @@ namespace game {
             j++;
         }
 
-        if (legit(i,j) && board.is_adv_piece_capt(i, j, white_))
+        if (legit(i, j) && board.is_move_legal(white_, legal, x_, y_, i,j) &&
+            board.is_adv_piece_capt(i, j, white_))
             rep.push_front(std::pair<int, int>(i, j));
 
         i = x_ - 1;
@@ -45,7 +47,8 @@ namespace game {
             rep.push_front(std::pair<int, int>(i, y_));
             i--;
         }
-        if (legit(i,j) && board.is_adv_piece_capt(i, j, white_))
+        if (legit(i, j) && board.is_move_legal(white_, legal, x_, y_, i, j) &&
+            board.is_adv_piece_capt(i, j, white_))
             rep.push_front(std::pair<int, int>(i, j));
 
 
@@ -56,7 +59,8 @@ namespace game {
             rep.push_front(std::pair<int, int>(x_, j));
             j--;
         }
-        if (legit(i,j) && board.is_adv_piece_capt(i, j, white_))
+        if (legit(i, j) && board.is_move_legal(white_, legal, x_, y_, i, j) &&
+            board.is_adv_piece_capt(i, j, white_))
             rep.push_front(std::pair<int, int>(i, j));
 
         i = x_ + 1;
@@ -67,7 +71,8 @@ namespace game {
             i++;
             j++;
         }
-        if (legit(i,j) && board.is_adv_piece_capt(i, j, white_))
+        if (legit(i, j) && board.is_move_legal(white_, legal, x_, y_, i, j) &&
+            board.is_adv_piece_capt(i, j, white_))
             rep.push_front(std::pair<int, int>(i, j));
 
         i = x_ - 1;
@@ -78,11 +83,10 @@ namespace game {
             i--;
             j--;
         }
-        if (legit(i,j) && board.is_adv_piece_capt(i, j, white_))
+        if (legit(i, j) && board.is_move_legal(white_, legal, x_, y_, i, j) &&
+            board.is_adv_piece_capt(i, j, white_))
             rep.push_front(std::pair<int, int>(i, j));
 
-        // if ( legit(i,j) && !board.is_adv_piece(i, j, white_))
-        //     rep.push_front(std::pair<int, int>(i, j));
         i = x_ + 1;
         j = y_ - 1;
         while ( legit(i,j) && board.is_move_legal(white_,legal,x_, y_, i, j) &&
@@ -91,7 +95,8 @@ namespace game {
             i++;
             j--;
         }
-        if (legit(i,j) && board.is_adv_piece_capt(i, j, white_))
+        if (legit(i, j) && board.is_move_legal(white_, legal, x_, y_, i, j) &&
+            board.is_adv_piece_capt(i, j, white_))
             rep.push_front(std::pair<int, int>(i, j));
 
         i = x_ - 1;
@@ -102,7 +107,8 @@ namespace game {
             i--;
             j++;
         }
-        if (legit(i,j) && board.is_adv_piece_capt(i, j, white_))
+        if (legit(i, j) && board.is_move_legal(white_, legal, x_, y_, i, j) &&
+            board.is_adv_piece_capt(i, j, white_))
             rep.push_front(std::pair<int, int>(i, j));
 
         return rep;
