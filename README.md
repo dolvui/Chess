@@ -71,8 +71,10 @@ become:
 
 > [!WARNING]
 > The column or row is specify in the notation which not implemented now
+
 > [!WARNING]
 > The pawn cannot check for now
+
 > [!WARNING]
 > En passant not implement for now
 
