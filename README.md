@@ -278,3 +278,5 @@ aproximation with a linar function:
 
 O(x) =~ 54x + 462
 ```
+
+![screenshot](https://github.com/dolvui/Chess/blob/main/plot_complexity.png)
