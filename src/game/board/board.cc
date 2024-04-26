@@ -117,12 +117,13 @@ namespace game
         //      std::cout << "start: " << start << "end: " << end<<"\n";
 
         if (board_.at(start) && tolower(board_.at(start)->get_piece()) == 'p') {
-          if (!board_.at(start)->is_white() && board_.at(start)->get_y() == 6) {
-            promote(start, end, 'Q');
+            if (!board_.at(start)->is_white() &&
+                board_.at(start)->get_y() == 6) {
+            promote(start, end, 'q');
             return 0;
           }
           if (board_.at(start)->is_white() && board_.at(start)->get_y() == 1) {
-              promote(start, end, 'q');
+              promote(start, end, 'Q');
               return 0;
           }
         }
@@ -175,22 +176,42 @@ namespace game
 
         switch (prom) {
         case 'N':
-            board_.at(end) = new game::Knight('N', board_.at(start)->is_white(),
+            board_.at(end) = new game::Knight('N', true,
                                               board_.at(start)->get_x(),
                                               board_.at(start)->get_y(),3);
             break;
         case 'B':
-            board_.at(end) = new game::Bishop('B', board_.at(start)->is_white(),
+            board_.at(end) = new game::Bishop('B', true,
                                               board_.at(start)->get_x(),
                                               board_.at(start)->get_y(),3);
             break;
         case 'Q':
-            board_.at(end) = new game::Queen('Q', board_.at(start)->is_white(),
+            board_.at(end) = new game::Queen('Q', true,
                                              board_.at(start)->get_x(),
                                              board_.at(start)->get_y(),9);
             break;
         case 'R':
-            board_.at(end) = new game::Rook('R', board_.at(start)->is_white(),
+            board_.at(end) = new game::Rook('R', true,
+                                            board_.at(start)->get_x(),
+                                            board_.at(start)->get_y(),5);
+            break;
+        case 'n':
+            board_.at(end) = new game::Knight('n', false,
+                                              board_.at(start)->get_x(),
+                                              board_.at(start)->get_y(),3);
+            break;
+        case 'b':
+            board_.at(end) = new game::Bishop('b', false,
+                                              board_.at(start)->get_x(),
+                                              board_.at(start)->get_y(),3);
+            break;
+        case 'q':
+            board_.at(end) = new game::Queen('q', false,
+                                             board_.at(start)->get_x(),
+                                             board_.at(start)->get_y(),9);
+            break;
+        case 'r':
+            board_.at(end) = new game::Rook('r', false,
                                             board_.at(start)->get_x(),
                                             board_.at(start)->get_y(),5);
             break;
@@ -252,14 +273,14 @@ namespace game
             if (board_.at(i)) {
                 if (!(board_.at(i)->is_white() ^ white)) {
                     auto l = board_.at(i)->compute_move(*this,true);
-                    // std::cout << "for the "
-                    //           << board_.at(i)->get_piece()
-                    //           << " in " << i << " :\n";
+                    std::cout << "for the "
+                              << board_.at(i)->get_piece()
+                              << " in " << i << " :\n";
                     for (auto m : l) {
-                        // std::cout << board_.at(i)->get_x()
-                        //           << ","
-                        //           << board_.at(i)->get_y()
-                 //             <<" to " << m.first << "," << m.second << "\n";
+                        std::cout << board_.at(i)->get_x()
+                                  << ","
+                                  << board_.at(i)->get_y()
+                             <<" to " << m.first << "," << m.second << "\n";
                     }
                     rep.merge(l);
                 };

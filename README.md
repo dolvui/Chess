@@ -73,9 +73,6 @@ become:
 > The column or row is specify in the notation which not implemented now
 
 > [!WARNING]
-> The pawn cannot check for now
-
-> [!WARNING]
 > En passant not implement for now
 
 
@@ -95,7 +92,7 @@ may keep track of the game with a manager to do all the dirty work
 
 just make a bot with random moves
 > [!NOTE]
-> bearly work ~ he can caslte !
+> seems to work
 named *jeff*
 
 ### second goal
@@ -117,7 +114,7 @@ need to add promotion move for bots
 # game's behavior exemple:
 
 > [!IMPORTANT]
-> right now the game is played white_player vs black_bot
+> right now the game is played white_player vs black_player
 
 ```
 white name: dolvui

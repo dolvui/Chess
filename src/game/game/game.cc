@@ -29,8 +29,6 @@ Game::Game(Board& board, game::Player* white_player, game::Player* black_player,
                   white_player_->loose();
               else
                   white_bot_->loose();
-
-
               break;
             }
             move++;

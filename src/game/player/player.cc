@@ -8,11 +8,12 @@ namespace game
     bool Player::compute_move(Board &board) {
       std::string input = "";
 
+      int l = board.get_legal_moves(white_).size();
       std::cout << "you got "
-                << board.get_legal_moves(white_).size()
+                << l
                 << " legal moves, use it with wisdom ..\n";
 
-        if (board.get_legal_moves(white_).size() == 0) {
+        if (l == 0) {
             std::cout << "\n no legal moves\n";
             return false;
         }
