@@ -5,6 +5,7 @@
 #include <memory>
 #include <stdexcept>
 #include <utility>
+
 #include "../piece/piece.hh"
 
 #include "../piece/bishop.hh"
@@ -13,17 +14,15 @@
 #include "../piece/queen.hh"
 #include "../piece/pawn.hh"
 #include "../piece/knight.hh"
-#include "../piece/hold.hh"
 
 #include "../player/player.hh"
 #include "board.hh"
+#include "move.hh"
 
 namespace game
 {
     Board::Board()
-        : board_(std::array<Piece *, 64>()),
-          hold_white_(new game::Hold('H', true, -1, -1, -1)),
-          hold_black_(new game::Hold('h', false, -1, -1, -2))
+        : board_(std::array<Piece *, 64>())
     {
         auto p1 = new game::Rook('r', false, 0, 0, 5);
         board_.at(0) = p1;
@@ -117,16 +116,30 @@ namespace game
         }
         //      std::cout << "start: " << start << "end: " << end<<"\n";
         if (board_.at(end) && tolower(board_.at(end)->get_piece()) == 'k')
-            throw new std::logic_error("king just wanna be eaten");
+          throw new std::logic_error("king just wanna be eaten");
+
+        if(board_.at(end))
+          moves_.push_back(game::Move(board_.at(start),
+                                      board_.at(end),nullptr));
+        else
+            moves_.push_back(game::Move(board_.at(start),end,nullptr));
+
         if (board_.at(start) && tolower(board_.at(start)->get_piece()) == 'p') {
             if (!board_.at(start)->is_white() &&
                 board_.at(start)->get_y() == 6) {
-                promote(start, end, 'q');
-                return 0;
+              promote(start, end, 'q');
+              return 0;
             }
             if (board_.at(start)->is_white() && board_.at(start)->get_y() == 1) {
-                promote(start, end, 'Q');
+              promote(start, end, 'Q');
                 return 0;
+            }
+            // std::cout << "s_y: " << start % 8 << "e_y: " << end % 8
+            //           << "end_case: " << !board_.at(end) <<
+            //     "rem pos: " <<(end % 8)*8 +  start / 8 << "\n";
+            if (start % 8 != end % 8 && !board_.at(end)) {
+//                std::cout << "En passant !\n";
+                board_.at( (start / 8)*8 +  end % 8 ) = nullptr;
             }
         }
 
@@ -483,4 +496,45 @@ namespace game
             //std::cout << "can little !!!!\n";
             return true;
         }
-    } /* game */
+    bool Board::can_enpassant(int i, int j, int x, int y, bool white) {
+        if (moves_.size() == 0)
+            return false;
+        auto prev = moves_.back();
+        if (!(tolower(prev.piece_) == 'p' && prev.white_ ^ white))
+          return false;
+        if (abs(prev.end_ / 8 - prev.start_ / 8) != 2)
+          return false;
+        if (j != prev.end_ / 8)
+          return false;
+        if (x != prev.end_ % 8)
+            return false;
+        return true;
+    }
+    std::string convert_int_not(int pos) {
+        char x = pos % 8 + 'a';
+        char y = pos / 8 + '0';
+        return std::string(1,x)+y;
+    }
+    int Board::print_moves() {
+        std::cout << "\nList of moves: \n";
+        for (Move obj : moves_) {
+          std::string capt = ((obj.capt_) ? "x" : "");
+          char p = std::toupper(obj.piece_);
+            std::cout << p << convert_int_not(obj.start_) <<
+                capt << convert_int_not(obj.end_) << " " << obj.prom;
+        }
+        return moves_.size();
+    }
+
+    bool Board::fifty_rule() {
+        int f = 0;
+        for (auto it = moves_.cend(); it != moves_.cbegin() && f != 100; it--) {
+          if (it->capt_ || tolower(it->piece_) == 'p') {
+              //   std::cout << f;
+              return false;
+          }
+            f++;
+        }
+        return f == 100;
+    }
+} /* game */

@@ -21,21 +21,27 @@ namespace game {
         if (white_)
             dir = -1;
 
-        if (legit(x_,y_ + dir) &&  board.is_move_legal(white_,legal,x_,y_,x_,y_ + dir)
-             && board.is_piece_move(x_, y_ + dir, white_)) {
+        if (legit(x_, y_ + dir) &&
+            board.is_move_legal(white_,legal,x_,y_,x_,y_ + dir)
+            && board.is_piece_move(x_, y_ + dir, white_)) {
             rep.push_front(std::pair<int, int>(x_, y_ + dir));
 
-            if (legit(x_,y_ + 2*dir) && board.is_move_legal(white_, legal, x_, y_, x_, y_ + 2*dir) &&
+            if (legit(x_, y_ + 2 * dir) &&
+                board.is_move_legal(white_, legal, x_, y_, x_, y_ + 2*dir) &&
                 is_started && board.is_piece_move(x_, y_ + 2*dir, white_))
                 rep.push_front(std::pair<int, int>(x_, y_ + 2*dir));
         }
 
-        if(legit(x_ + 1,y_ + dir) && board.is_move_legal(white_,legal,x_,y_,x_ + 1,y_ + dir)
-            && board.is_capt_piece(x_ + 1,y_ + dir,white_))
+        if (legit(x_ + 1, y_ + dir) &&
+            board.is_move_legal(white_, legal, x_, y_, x_ + 1, y_ + dir) &&
+            (board.is_capt_piece(x_ + 1, y_ + dir, white_) ||
+                board.can_enpassant(x_, y_, x_ + 1, y_ + dir,white_)) )
             rep.push_front(std::pair<int, int>(x_ + 1, y_ + dir));
 
-        if(legit(x_ - 1,y_ + dir) &&  board.is_move_legal(white_,legal,x_,y_,x_ - 1,y_ + dir)
-            && board.is_capt_piece(x_ - 1,y_ + dir,white_))
+        if (legit(x_ - 1, y_ + dir) &&
+            board.is_move_legal(white_, legal, x_, y_, x_ - 1, y_ + dir) &&
+            (board.is_capt_piece(x_ - 1, y_ + dir, white_) ||
+             board.can_enpassant(x_, y_, x_ - 1, y_ + dir,white_) ))
             rep.push_front(std::pair<int, int>(x_ - 1, y_ + dir));
         return rep;
     }

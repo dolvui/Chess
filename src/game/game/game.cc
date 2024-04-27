@@ -57,12 +57,20 @@ Game::Game(Board& board, game::Player* white_player, game::Player* black_player,
 
               break;
             }
+            if (board_.fifty_rule()) {
+              std::cout << "\n fifty rules ,"
+                        << "not capture of pawn moves in the last 50 moves ! "
+                           "\n   DRAW   \n";
+              board_.print_moves();
+              break;
+            }
             if (board_.not_enough_material()) {
                 std::cout << "\n Not enough materials ! \n   DRAW   \n";
                 break;
             }
             move++;
         }
+//        int lm = board_.print_moves();
         std::cout << "\n\n End of the game \n";
     }
 }

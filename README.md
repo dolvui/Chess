@@ -12,8 +12,8 @@ mostly 64-40-20-10-1
     output: -n < heuristic < n
 
 ## RUN
-make -B && ./chess
 
+make -B && ./chess
 
 ## NOTATION
 
@@ -50,9 +50,6 @@ castling:
         O-O-O
 
 ambiguous moves:
-    spec:
-    number or letter that represent a row or column to avoid ambiguity
-    work for pawn and figures
 
     [FIGURES][spec][letter][number]
     ex:
@@ -66,37 +63,26 @@ ambiguous moves:
 
 ## description of the current version
 
-### classic moves
 
-classic game of chess ,
-boting on the way
-some feature still missing
-not a big deal tho
+The game of chess is fully implemented.
 
-> [!NOTE]
-> 'stalemate' and 'insufficient mating material' is mostly implemented
+Need more tests to be sure everything right !
+
+> [!CAUTION]
+> A move that not follow the notation is a undefined behavior and will mostly output a non-valid move
+
+> [!CAUTION]
+> Thanks to jeff the bot, I saw some games finish by a SEGFAULT , still looking for  why
+
+if the game end by a fifty rule , the list of moves is printed.
 
 ## future features
 
-### specify move
+- save and load games,
 
-> [!WARNING]
-> En passant not implement for now
+- parse into FNE for more portability,
 
-> [!WARNING]
-> A move that not follow the notation is a undefined behavior
-> and will mostly output a non-valid move
-
-### draw
-
-check 50 rule
-
-may keep track of the game with a manager to do all the dirty work
-
-### nice features
-
--save and load games,
--parse into FNE for more portability,
+- add some parameter for a better UX
 
 ## boting
 
@@ -105,8 +91,9 @@ may keep track of the game with a manager to do all the dirty work
 just make a bot with random moves
 
 > [!NOTE]
-> seems to work
-named *jeff*
+> only bot available rn
+
+named *jeff* (or *jeffrey* for black)
 
 ### second goal
 

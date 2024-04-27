@@ -3,12 +3,15 @@
 #include <array>
 #include <memory>
 #include <utility>
+#include <vector>
 
+#include "move.hh"
 #include "../piece/piece.hh"
 #include "../player/player.hh"
 
 namespace game {
     class Piece;
+    class Move;
     class Board {
     public:
         Board();
@@ -22,6 +25,7 @@ namespace game {
         bool is_piece_move(int i, int j, bool white);
         bool is_adv_piece_one(int i, int j, bool white);
         bool is_adv_piece_capt(int i, int j, bool white);
+        bool can_enpassant(int i, int j, int x , int y ,bool white);
         bool can_big_castle(int x, int y, int new_x);
         bool can_lil_castle(int x, int y, int new_x);
         int caslte(bool little, bool white);
@@ -34,9 +38,10 @@ namespace game {
         get_bot_legal_moves(bool white);
         bool is_in_check(bool white);
         bool not_enough_material();
+        bool fifty_rule();
+        int print_moves();
     private:
         std::array<Piece *, 64> board_;
-        Piece *hold_white_;
-        Piece *hold_black_;
+        std::vector<game::Move> moves_;
     };
 } /* game */
