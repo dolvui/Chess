@@ -71,9 +71,6 @@ Need more tests to be sure everything right !
 > [!CAUTION]
 > A move that not follow the notation is a undefined behavior and will mostly output a non-valid move
 
-> [!CAUTION]
-> Thanks to jeff the bot, I saw some games finish by a SEGFAULT , still looking for  why
-
 if the game end by a fifty rule , the list of moves is printed.
 
 ## future features
@@ -83,6 +80,8 @@ if the game end by a fifty rule , the list of moves is printed.
 - parse into FNE for more portability,
 
 - add some parameter for a better UX
+
+- should more use the new class "game::Move" , to simplify code and avoid bugs !
 
 ## boting
 

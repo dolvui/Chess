@@ -118,6 +118,11 @@ namespace game
         if (board_.at(end) && tolower(board_.at(end)->get_piece()) == 'k')
           throw new std::logic_error("king just wanna be eaten");
 
+        if (!board_.at(start)) {
+            print_moves();
+            throw new std::logic_error("move nobody");
+        }
+
         if(board_.at(end))
           moves_.push_back(game::Move(board_.at(start),
                                       board_.at(end),nullptr));
@@ -156,7 +161,7 @@ namespace game
             if (end - start < 0) {
                 move(end - 2 , end + 1);
                 //std::cout << "a:" << end -2 << "b: " << end + 1 << "\n";
-            }else {
+            } else {
                 move(end + 1, start + 1);
             }
         }
@@ -171,10 +176,12 @@ namespace game
       |   1    |  1    |  1 really xd ???
     */
     int Board::caslte(bool little, bool white) {
-        int start = white ? 60 : 4;
+      int start = white ? 60 : 4;
+      int dest = start + (little ? 2 : -2);
+      start = find_start('K',white,dest,nullptr);
         if(little)
-            return move(start, start + 2);
-        return move(start , start  - 2);
+            return move(start,dest);
+        return move(start ,dest);
     }
 
     int convert(char l, char num) {
@@ -477,6 +484,8 @@ namespace game
             int start = y * 8 + x;
             int end = y * 8 + new_x;
 
+            if (!board_.at(start - 4))
+                return false;
             if (board_.at(start - 1) || board_.at(start - 2) ||
                 board_.at(start - 3) ||
                 (board_.at(start - 4) && !board_.at(start - 4 )->get_started())){
@@ -488,7 +497,10 @@ namespace game
         bool Board::can_lil_castle(int x, int y, int new_x) {
             int start = y * 8 + x;
             int end = y * 8 + new_x;
-
+            // std::cout << "\n in little castle !\n";
+            // std::cout << board_.at(start + 3)->get_piece();
+            if (!board_.at(start + 3))
+                return false;
             if (board_.at(start + 1) || board_.at(start + 2) ||
                 (board_.at(start + 3) && !board_.at(start + 3)->get_started())){
                 return false;
