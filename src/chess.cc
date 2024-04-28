@@ -39,16 +39,18 @@ int main() {
         white_player = new game::Player(name1,true);
     }
     else {
-        white_bot = new game::Bot("Victor",true);
+      white_bot = new game::Bot("Victor", true);
+      white_bot->set_compute(2);
     }
 
     if (mode % 2 == 1) {
-        std::cout << "\black name: ";
+        std::cout << "\nblack name: ";
         std::cin >> name2;
         black_player = new game::Player(name2,false);
     }
     else {
-        black_bot = new game::Bot("vivi",false);
+      black_bot = new game::Bot("Vivi", false);
+      black_bot->set_compute(2);
     }
 
     auto g = game::Game(b,white_player,black_player,white_bot,black_bot);

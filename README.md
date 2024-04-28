@@ -91,18 +91,12 @@ if the game end by a fifty rule , the list of moves is printed.
 
 ### current goal
 
-A bot with minimal heuristic
-link a value to a moves and select the best
-named *victor* (or *vivi* for black)
-
-> [!NOTE]
-> bot available , working in progress ~ 600 elo lol
-
-### Next goal
-
 a bot with  heuristic,
 expand the second in a tree with minmax and alphabeta!
-named *no_name_for_now*
+
+Iam currently testing this one , there is 0 opti
+and the compuation is heavy and bugy,
+working on that to create  monster !
 
 ### add prom moves for futur bots
 
