@@ -69,11 +69,15 @@ The game of chess is fully implemented.
 Need more tests to be sure everything right !
 
 > [!CAUTION]
+> Some segfault occurs still try to figure out why but its very rare
+
+
+> [!CAUTION]
 > A move that not follow the notation is a undefined behavior and will mostly output a non-valid move
 
 if the game end by a fifty rule , the list of moves is printed.
 
-## future features
+## FUTURE FEATURES ?
 
 - save and load games,
 
@@ -83,30 +87,25 @@ if the game end by a fifty rule , the list of moves is printed.
 
 - should more use the new class "game::Move" , to simplify code and avoid bugs !
 
-## boting
+- a front end in a local server in a web page
 
-### first goal
+- an OCR for parse a image in a game
 
-just make a bot with random moves
+## BOTING
 
-> [!NOTE]
-> bot disable
-
-named *jeff* (or *jeffrey* for black)
-
-### second goal
+### current goal
 
 A bot with minimal heuristic
 link a value to a moves and select the best
 named *victor* (or *vivi* for black)
 
 > [!NOTE]
-> bot available , working in progress ~ 300 elo lol
+> bot available , working in progress ~ 600 elo lol
 
-### third goal
+### Next goal
 
 a bot with  heuristic,
-expand the second in a tree!
+expand the second in a tree with minmax and alphabeta!
 named *no_name_for_now*
 
 ### add prom moves for futur bots

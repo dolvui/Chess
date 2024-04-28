@@ -16,6 +16,6 @@ namespace game {
       x_ = pos % 8;
       y_ = pos / 8;
       is_started = false;
-      value_ = raw_value_ * weights_[y_ * 8 + x_];
+      value_ = raw_value_  * weights_[y_ * 8 + x_];
     }
 }

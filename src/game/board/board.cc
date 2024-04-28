@@ -572,7 +572,7 @@ namespace game
         return std::string(1,x)+y;
     }
     int Board::print_moves() {
-        std::cout << "\nList of moves: \n";
+      std::cout << "\nList of moves: \n";
         for (Move obj : moves_) {
           std::string capt = ((obj.capt_) ? "x" : "");
           char p = std::toupper(obj.piece_);

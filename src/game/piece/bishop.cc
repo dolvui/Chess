@@ -28,7 +28,7 @@ namespace game {
               1.05, 1.05, 1.1, 1.1,  1.05, 1.05, 0.9, 0.9, 1.0, 1.05, 1.1,
               1.1,  1.05, 1.0, 0.9,  0.9,  1.0,  1.0, 1.0, 1.0, 1.0,  1.0,
               0.9,  0.8,  0.9, 0.9,  0.9,  0.9,  0.9, 0.9, 0.8};
-        this->value_ = raw_value_ * weights_[y*8 +x];
+        this->value_ = raw_value_;// * weights_[y*8 +x];
     }
 
     std::list<std::pair<int, int>>

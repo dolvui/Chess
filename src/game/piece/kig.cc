@@ -27,7 +27,7 @@ namespace game {
               0.7, 0.6, 0.6, 0.7, 0.7, 0.8, 0.7, 0.6, 0.6, 0.5, 0.5, 0.6, 0.6,
               0.7, 0.7, 0.6, 0.6, 0.5, 0.5, 0.6, 0.6, 0.7, 0.7, 0.6, 0.6, 0.5,
               0.5, 0.6, 0.6, 0.7, 0.7, 0.6, 0.6, 0.5, 0.5, 0.6, 0.6, 0.7};
-        this->value_ = raw_value_ * weights_[y*8 +x];
+        this->value_ = raw_value_;// * weights_[y*8 +x];
     }
     std::list<std::pair<int, int>>
     Kig::compute_move(game::Board& board, bool legal) {

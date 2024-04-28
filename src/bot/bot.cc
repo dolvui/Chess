@@ -11,37 +11,28 @@ namespace game {
     }
 
     bool Bot::compute_move(Board &board) {
-      const auto m = board.get_bot_legal_moves(white_);
-      // auto it = m.cbegin();
-      if (m.size() == 0)
-           return false;
-      // srand(time(NULL));
-      // int random = rand() % m.size();
-      // std::advance(it, random);
-      // board.move(it->first.second * 8 + it->first.first,
-      //            it->second.second * 8 + it->second.first);
-      // board.print_board();
-      //
-      // for (auto it = m.cbegin(); it != m.cend(); it++) {
-      //     std::cout << "start: "<< it->first.second * 8 + it->first.first <<
-      //         "emd: "<< it->second.second * 8 + it->second.first<<"\n";
-      // }
+        const auto m = board.get_bot_legal_moves(white_);
+        if (m.size() == 0)
+            return false;
         int max_heur = 0;
         std::list<std::pair<std::pair<int, int>,
                             std::pair<int, int>>>::const_iterator best_move;
         for (auto move = m.cbegin(); move != m.cend(); move++) {
-          Board b(board);
-          int rt = b.move(move->first.second * 8 + move->first.first,
-                          move->second.second * 8 + move->second.first);
-          if (rt != 0) {
-            continue;
-          }
-          float cur_heur = evaluate_board(b) +
-              b.get_bot_legal_moves(white_).size();
-          if (cur_heur > max_heur) {
-            max_heur = cur_heur;
-            best_move = move;
-          }
+            Board b(board);
+            int rt = b.move(move->first.second * 8 + move->first.first,
+                            move->second.second * 8 + move->second.first);
+            if (rt != 0) {
+                continue;
+            }
+            float cur_heur = evaluate_board(b);
+            // std::cout << "\n for the move: "
+            //           << move->first.second * 8 + move->first.first << " to "
+            //           << move->second.second * 8 + move->second.first
+            //           << "evaluate to " << cur_heur << "\n";
+            if (cur_heur >= max_heur) {
+                max_heur = cur_heur;
+                best_move = move;
+            }
         }
         board.move(best_move->first.second * 8 + best_move->first.first,
                    best_move->second.second * 8 + best_move->second.first);
@@ -51,11 +42,15 @@ namespace game {
 
     float Bot::evaluate_board(Board &board) {
         float eval = 0;
+        int M = (board.get_bot_legal_moves(white_).size() -
+                       board.get_bot_legal_moves(!white_).size());
+
         for (auto p : board.get_board_()) {
-            if (p && !(p->is_white() ^ white_)) {
-                eval += p->get_value();
-            }
+          if (p) {
+            eval = eval + white_ + p->get_value() *
+                (p->is_white() ^ white_?-1 : 1);
         }
-        return eval;
+        }
+        return eval +M;
     }
 } /* game */
