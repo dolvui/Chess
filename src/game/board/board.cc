@@ -3,7 +3,9 @@
 #include <iostream>
 #include <list>
 #include <memory>
+#include <sstream>
 #include <stdexcept>
+#include <string>
 #include <utility>
 
 #include "../piece/piece.hh"
@@ -551,7 +553,22 @@ namespace game
         }
         return f == 100;
     }
-    std::array<Piece *, 64> Board::get_board_() const {
-        return board_;
+    std::array<Piece *, 64> Board::get_board_() const { return board_; }
+
+    std::string Board::get_last_move() {
+      if (moves_.size() == 0)
+          return "";
+      auto obj = moves_.at(moves_.size() -1);
+      std::stringstream ss;
+      std::string capt = ((obj.capt_) ? "x" : "");
+      char p = std::toupper(obj.piece_);
+      std::string s = convert_int_not(obj.start_);
+      std::string e = convert_int_not(obj.end_);
+      ss << p;
+      ss << s;
+      ss << capt;
+      ss <<  e;
+      //std::string rep = p + s + capt + e;
+      return ss.str();
     }
 } /* game */

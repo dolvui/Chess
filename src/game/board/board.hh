@@ -41,6 +41,7 @@ namespace game {
         bool fifty_rule();
         int print_moves();
         std::array<Piece *, 64> get_board_() const;
+        std::string get_last_move();
     private:
         std::array<Piece *, 64> board_;
         std::vector<game::Move> moves_;

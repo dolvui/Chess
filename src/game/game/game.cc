@@ -37,7 +37,8 @@ Game::Game(Board& board, game::Player* white_player, game::Player* black_player,
            if (board_.not_enough_material()) {
                 std::cout << "\n Not enough materials ! \n   DRAW   \n";
                 break;
-            }
+           }
+           std::cout << board_.get_last_move();
             move++;
             if (black_player_ && !black_player_->compute_move(board_) ||
                 black_bot_ && !black_bot_->compute_move(board_)) {
@@ -68,6 +69,7 @@ Game::Game(Board& board, game::Player* white_player, game::Player* black_player,
                 std::cout << "\n Not enough materials ! \n   DRAW   \n";
                 break;
             }
+            std::cout << board_.get_last_move();
             move++;
         }
 //        int lm = board_.print_moves();
