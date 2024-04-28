@@ -32,7 +32,7 @@ namespace game {
         for (auto move = m.cbegin(); move != m.cend(); move++) {
           Board b(board);
           int rt = b.move(move->first.second * 8 + move->first.first,
-                          move->second.second * 8 + move->second.first,false);
+                          move->second.second * 8 + move->second.first);
           if (rt != 0) {
             continue;
           }
@@ -44,7 +44,7 @@ namespace game {
           }
         }
         board.move(best_move->first.second * 8 + best_move->first.first,
-                   best_move->second.second * 8 + best_move->second.first,true);
+                   best_move->second.second * 8 + best_move->second.first);
         board.print_board();
         return true;
     }

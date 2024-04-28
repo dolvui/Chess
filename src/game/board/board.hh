@@ -15,7 +15,8 @@ namespace game {
     class Board {
     public:
         Board();
-        int  move(int start,int end,bool set);
+        Board(const Board &other);
+        int  move(int start,int end);
         void print_board();
         int compute_move(std::string move_not, bool white);
         int find_start(char piece, bool white, int dest,

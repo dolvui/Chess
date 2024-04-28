@@ -87,6 +87,46 @@ namespace game
         auto ph = new game::Rook('R', true, 7, 7, 5);
         board_.at(63) = ph;
     }
+
+    Board::Board(const Board &other): board_(std::array<Piece *, 64>()) {
+        for (int i = 0; i < 64; i++) {
+            Piece *piece = other.board_.at(i);
+            if (piece) {
+                switch (tolower(piece->get_piece())) {
+                case 'q':
+                  board_.at(i) = new Queen(piece->get_piece(),
+                                           piece->is_white(), piece->get_x(),
+                                           piece->get_y(),piece->get_value());
+                    break;
+                case 'k':
+                    board_.at(i) = new Kig(piece->get_piece(),
+                                           piece->is_white(), piece->get_x(),
+                                           piece->get_y(),piece->get_value());
+                    break;
+                case 'p':
+                    board_.at(i) = new Pawn(piece->get_piece(),
+                                           piece->is_white(), piece->get_x(),
+                                           piece->get_y(),piece->get_value());
+                    break;
+                case 'b':
+                    board_.at(i) = new Bishop(piece->get_piece(),
+                                           piece->is_white(), piece->get_x(),
+                                           piece->get_y(),piece->get_value());
+                    break;
+                case 'r':
+                    board_.at(i) = new Rook(piece->get_piece(),
+                                           piece->is_white(), piece->get_x(),
+                                           piece->get_y(),piece->get_value());
+                    break;
+                case 'n':
+                    board_.at(i) = new Knight(piece->get_piece(),
+                                           piece->is_white(), piece->get_x(),
+                                           piece->get_y(),piece->get_value());
+                    break;
+                }
+            }
+        }
+    }
     void Board::print_board() {
         int c = 8;
         for (int i = 0; i < 64; i++) {
@@ -111,7 +151,7 @@ namespace game
         std::cout << "\n";
     }
 
-    int  Board::move(int start, int end,bool set) {
+    int  Board::move(int start, int end) {
         if (start >= 64 || start < 0 || end >= 64 || end < 0) {
             std::cout << "\n This move not valid , try a other one !\n";
             return 1;
@@ -154,7 +194,7 @@ namespace game
 
         board_.at(end) = board_.at(start);
         board_.at(start) = nullptr;
-        if (set && board_.at(end)) {
+        if (board_.at(end)) {
             board_.at(end)->set_pos(end);
             board_.at(end)->has_moved();
         }
@@ -163,10 +203,10 @@ namespace game
             abs(end - start) == 2) {
             //std::cout << abs(end - start) << "\n";
             if (end - start < 0) {
-                move(end - 2 , end + 1,set);
+                move(end - 2 , end + 1);
                 //std::cout << "a:" << end -2 << "b: " << end + 1 << "\n";
             } else {
-                move(end + 1, start + 1,set);
+                move(end + 1, start + 1);
             }
         }
         return 0;
@@ -184,8 +224,8 @@ namespace game
       int dest = start + (little ? 2 : -2);
       start = find_start('K',white,dest,nullptr);
         if(little)
-            return move(start,dest,true);
-        return move(start ,dest,true);
+            return move(start,dest);
+        return move(start ,dest);
     }
 
     int convert(char l, char num) {
@@ -279,7 +319,7 @@ namespace game
                 destination = move_not.substr(1, 2);
                 int dest = convert(destination[0],destination[1]);
                 int start = find_start(piece[0], white, dest,pair);
-                return move(start,dest,true);
+                return move(start,dest);
             }
         } else {
           if (move_not.size() == 4) { // Reb6
@@ -297,7 +337,7 @@ namespace game
         }
         int dest = convert(destination[0],destination[1]);
         int start = find_start(piece[0], white, dest,pair);
-        return move(start,dest,true);
+        return move(start,dest);
     }
     int Board::find_start(char piece, bool white,
                           int dest,std::pair<int,int>* pair) {
@@ -488,7 +528,7 @@ namespace game
             int start = y * 8 + x;
             int end = y * 8 + new_x;
 
-            if (!board_.at(start - 4))
+            if (start - 4 >= 0 || start < 64 || !board_.at(start - 4))
                 return false;
             if (board_.at(start - 1) || board_.at(start - 2) ||
                 board_.at(start - 3) ||
@@ -503,7 +543,7 @@ namespace game
             int end = y * 8 + new_x;
             // std::cout << "\n in little castle !\n";
             // std::cout << board_.at(start + 3)->get_piece();
-            if (!board_.at(start + 3))
+            if (start + 3 < 64 || start < 64 || !board_.at(start + 3))
                 return false;
             if (board_.at(start + 1) || board_.at(start + 2) ||
                 (board_.at(start + 3) && !board_.at(start + 3)->get_started())){

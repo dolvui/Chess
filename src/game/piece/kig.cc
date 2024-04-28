@@ -71,7 +71,7 @@ namespace game {
             board.is_adv_piece_one(x_ - 1,y_ - 1,white_))
             rep.push_front(std::pair<int, int>(x_ - 1, y_ - 1));
 
-        if (is_started &&  board.can_big_castle(x_, y_, x_ - 2) &&
+        if (is_started && board.can_big_castle(x_, y_, x_ - 2) &&
             board.is_move_legal(white_, legal,x_, y_, x_ - 1, y_) &&
             board.is_move_legal(white_, legal,x_, y_, x_ - 2, y_)
             ) {
