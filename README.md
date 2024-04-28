@@ -69,10 +69,6 @@ The game of chess is fully implemented.
 Need more tests to be sure everything right !
 
 > [!CAUTION]
-> Some segfault occurs still try to figure out why but its very rare
-
-
-> [!CAUTION]
 > A move that not follow the notation is a undefined behavior and will mostly output a non-valid move
 
 if the game end by a fifty rule , the list of moves is printed.

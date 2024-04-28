@@ -3,6 +3,8 @@
 #include <ctime>
 #include <iostream>
 #include <unistd.h>
+#include <limits>
+
 namespace game {
 
     Bot::Bot(std::string name, bool white) {
@@ -14,11 +16,11 @@ namespace game {
         const auto m = board.get_bot_legal_moves(white_);
         if (m.size() == 0)
             return false;
-        int max_heur = 0;
-        std::list<std::pair<std::pair<int, int>,
-                            std::pair<int, int>>>::const_iterator best_move;
+        float max_heur = std::numeric_limits<float>::min();
+        auto best_move = m.begin();
         for (auto move = m.cbegin(); move != m.cend(); move++) {
-            Board b(board);
+          Board b(board);
+//          std::cout << move._M_node;
             int rt = b.move(move->first.second * 8 + move->first.first,
                             move->second.second * 8 + move->second.first);
             if (rt != 0) {
