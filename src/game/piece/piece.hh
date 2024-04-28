@@ -17,7 +17,7 @@ namespace game {
         bool is_white();
         int get_x();
         int get_y();
-        int get_value();
+        float get_value();
         bool get_started();
 
         void set_x(int x);
@@ -30,8 +30,10 @@ namespace game {
         bool white_;
         int x_;
         int y_;
-        int value_;
+        float value_;
+        int raw_value_;
         bool is_started = true;
+        std::array<float,64> weights_;
     };
 } // namespace game
 

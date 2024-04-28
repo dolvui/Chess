@@ -90,15 +90,18 @@ if the game end by a fifty rule , the list of moves is printed.
 just make a bot with random moves
 
 > [!NOTE]
-> only bot available rn
+> bot disable
 
 named *jeff* (or *jeffrey* for black)
 
 ### second goal
 
-a bot with minimal heuristic
+A bot with minimal heuristic
 link a value to a moves and select the best
-named *victor*
+named *victor* (or *vivi* for black)
+
+> [!NOTE]
+> bot available , working in progress ~ 300 elo lol
 
 ### third goal
 

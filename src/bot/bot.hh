@@ -11,7 +11,8 @@ namespace game
         Bot(std::string name,bool white);
         // Bot(){};
         // ~Bot(){};
-        bool compute_move(Board& board) override;
+        bool compute_move(Board &board) override;
+        float evaluate_board(Board &board);
         //std::string get_name();
     // private:
     //     std::string name_;

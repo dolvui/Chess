@@ -15,7 +15,7 @@ namespace game {
     class Board {
     public:
         Board();
-        int  move(int start,int end);
+        int  move(int start,int end,bool set);
         void print_board();
         int compute_move(std::string move_not, bool white);
         int find_start(char piece, bool white, int dest,
@@ -40,6 +40,7 @@ namespace game {
         bool not_enough_material();
         bool fifty_rule();
         int print_moves();
+        std::array<Piece *, 64> get_board_() const;
     private:
         std::array<Piece *, 64> board_;
         std::vector<game::Move> moves_;

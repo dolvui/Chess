@@ -109,7 +109,7 @@ namespace game
         std::cout << "\n";
     }
 
-    int  Board::move(int start, int end) {
+    int  Board::move(int start, int end,bool set) {
         if (start >= 64 || start < 0 || end >= 64 || end < 0) {
             std::cout << "\n This move not valid , try a other one !\n";
             return 1;
@@ -119,8 +119,10 @@ namespace game
           throw new std::logic_error("king just wanna be eaten");
 
         if (!board_.at(start)) {
-            print_moves();
+            //print_moves();
+            //std::cout << board_.at(start);
             throw new std::logic_error("move nobody");
+            //return 1;
         }
 
         if(board_.at(end))
@@ -150,7 +152,7 @@ namespace game
 
         board_.at(end) = board_.at(start);
         board_.at(start) = nullptr;
-        if (board_.at(end)) {
+        if (set && board_.at(end)) {
             board_.at(end)->set_pos(end);
             board_.at(end)->has_moved();
         }
@@ -159,10 +161,10 @@ namespace game
             abs(end - start) == 2) {
             //std::cout << abs(end - start) << "\n";
             if (end - start < 0) {
-                move(end - 2 , end + 1);
+                move(end - 2 , end + 1,set);
                 //std::cout << "a:" << end -2 << "b: " << end + 1 << "\n";
             } else {
-                move(end + 1, start + 1);
+                move(end + 1, start + 1,set);
             }
         }
         return 0;
@@ -180,8 +182,8 @@ namespace game
       int dest = start + (little ? 2 : -2);
       start = find_start('K',white,dest,nullptr);
         if(little)
-            return move(start,dest);
-        return move(start ,dest);
+            return move(start,dest,true);
+        return move(start ,dest,true);
     }
 
     int convert(char l, char num) {
@@ -275,7 +277,7 @@ namespace game
                 destination = move_not.substr(1, 2);
                 int dest = convert(destination[0],destination[1]);
                 int start = find_start(piece[0], white, dest,pair);
-                return move(start,dest);
+                return move(start,dest,true);
             }
         } else {
           if (move_not.size() == 4) { // Reb6
@@ -293,7 +295,7 @@ namespace game
         }
         int dest = convert(destination[0],destination[1]);
         int start = find_start(piece[0], white, dest,pair);
-        return move(start,dest);
+        return move(start,dest,true);
     }
     int Board::find_start(char piece, bool white,
                           int dest,std::pair<int,int>* pair) {
@@ -524,7 +526,7 @@ namespace game
     }
     std::string convert_int_not(int pos) {
         char x = pos % 8 + 'a';
-        char y = pos / 8 + '0';
+        char y = pos / 8 + '1';
         return std::string(1,x)+y;
     }
     int Board::print_moves() {
@@ -548,5 +550,8 @@ namespace game
             f++;
         }
         return f == 100;
+    }
+    std::array<Piece *, 64> Board::get_board_() const {
+        return board_;
     }
 } /* game */

@@ -39,7 +39,7 @@ int main() {
         white_player = new game::Player(name1,true);
     }
     else {
-        white_bot = new game::Bot("Jeff",true);
+        white_bot = new game::Bot("Victor",true);
     }
 
     if (mode % 2 == 1) {
@@ -48,7 +48,7 @@ int main() {
         black_player = new game::Player(name2,false);
     }
     else {
-        black_bot = new game::Bot("Jeffrey",false);
+        black_bot = new game::Bot("vivi",false);
     }
 
     auto g = game::Game(b,white_player,black_player,white_bot,black_bot);
