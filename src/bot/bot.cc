@@ -43,8 +43,9 @@ namespace game {
     }
 
     float Bot::evaluate_board(Board &board) {
-        float eval = 0;
-        int M = (board.get_bot_legal_moves(white_).size() -
+      float eval = 0;
+      srand(time(NULL));
+      float M = (((float)rand())/(float)RAND_MAX) * (board.get_bot_legal_moves(white_).size() -
                        board.get_bot_legal_moves(!white_).size());
 
         for (auto p : board.get_board_()) {
