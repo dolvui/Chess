@@ -1,8 +1,8 @@
 #include "node.hh"
 
 namespace game {
-    Node::Node(Board &board, float heur, bool white)
-        : board_(board), value_(heur), white_(white),
+    Node::Node(float heur, bool white)
+        : value_(heur), white_(white),
           nodes_(std::vector<Node *>()){};
 
     void Node::add_child(Node *node) { nodes_.push_back(node); }

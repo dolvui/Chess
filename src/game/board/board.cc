@@ -158,7 +158,8 @@ namespace game
         }
         //      std::cout << "start: " << start << "end: " << end<<"\n";
         if (board_.at(end) && tolower(board_.at(end)->get_piece()) == 'k')
-          throw new std::logic_error("king just wanna be eaten");
+            return 1;
+            //throw new std::logic_error("king just wanna be eaten");
 
         if (!board_.at(start)) {
             //print_moves();

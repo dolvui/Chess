@@ -85,18 +85,17 @@ if the game end by a fifty rule , the list of moves is printed.
 
 - a front end in a local server in a web page
 
-- an OCR for parse a image in a game
+- an OCR for parse a image into a game
 
 ## BOTING
 
 ### current goal
 
-a bot with  heuristic,
-expand the second in a tree with minmax and alphabeta!
+The current bot use a basic heuristic formula [see](https://www.chessprogramming.org/Evaluation)
 
-Iam currently testing this one , there is 0 opti
-and the compuation is heavy and bugy,
-working on that to create  monster !
+All wrapped in a tree
+
+,for now none opti are done and a depth of 4 is deadly , so for now some testing , add some parameter and basic optimistion in tree logic and computation
 
 ### add prom moves for futur bots
 
@@ -111,7 +110,7 @@ need to add promotion move for bots
 > You now can select who play vs who (player and bot)
 
 > [!NOTE]
-> if you select '4' (bot vs bot) , you become spectator of two bot playing randomly
+> if you select '4' (bot vs bot) , you become spectator of two bot playing
 
 ```
   -white--|--black-

@@ -71,7 +71,7 @@ namespace game {
 
         for (auto p : board.get_board_()) {
             if (p) {
-                eval = eval + p->get_value() * (p->is_white() ^ white_?-1 : 1);
+                eval = eval + p->get_value() * (p->is_white() ^ white_? -1 : 1);
             }
         }
         return eval + (float)M;
@@ -81,64 +81,69 @@ namespace game {
         if(depth == 0 || node->get_childs().size() == 0)
             return node->get_value();
         if (white) {
-          float value = std::numeric_limits<float>::min();
-          for (auto child : node->get_childs()) {
-              value = std::max(value, compute_minmax(child, depth-1,!white));
-          }
-          node->set_minmax_value(value);
-          return value;
+            float value = std::numeric_limits<float>::min();
+            for (auto child : node->get_childs()) {
+                value = std::max(value, compute_minmax(child, depth-1,!white));
+            }
+            node->set_minmax_value(value);
+            return value;
         } else {
             float value = std::numeric_limits<float>::max();
             for(auto child : node->get_childs())
-              value = std::min(value, compute_minmax(child, depth - 1,white));
+                value = std::min(value, compute_minmax(child, depth - 1,white));
             node->set_minmax_value(value);
             return value;
         }
     }
 
-    void Bot::construct_tree(Node &node, int depth, bool white) {
-      if (depth == 0)
-          return;
-        const auto m = node.get_board().get_bot_legal_moves(white);
-        if (m.size() == 0)
+    void Bot::construct_tree(Node &node, int depth, bool white,Board& board) {
+        if (depth == 0)
             return;
+        const auto m = board.get_bot_legal_moves(white);
+        if (m.size() == 0)
+          return;
         for (auto move = m.cbegin(); move != m.cend(); move++) {
-            Board b(node.get_board());
+          Board b(board);
             int rt = b.move(move->first.second * 8 + move->first.first,
                             move->second.second * 8 + move->second.first);
-
-            float cur_heur = evaluate_board(b) * (white ? 1 : -1);
-            auto node_child = new Node(b, cur_heur, white_);
+            if (rt != 0)
+                continue;
+            float cur_heur = evaluate_board(b) * (white ? -1 : 1);
+            auto node_child = new Node(cur_heur, white_);
             node.add_child(node_child);
-            Bot::construct_tree(*node_child,depth-1,!white);
+            construct_tree(*node_child,depth-1,white,b);
         }
     }
     void print_tree(Node* node,int depth = 0) {
         if (!node) return;
-    for (int i = 0; i < depth; ++i) {
-        std::cout << "  ";
+        for (int i = 0; i < depth; ++i) {
+            std::cout << "  ";
+        }
+        std::cout << node->get_value() << std::endl;
+        for (auto child : node->get_childs()) {
+            print_tree(child, depth + 1);
+        }
     }
-    std::cout << node->get_value() << std::endl;
-    for (auto child : node->get_childs()) {
-        print_tree(child, depth + 1);
-    }
-    }
+
     bool Bot::minmax(Board &board) {
-      int d = 2;
-      Board b(board);
-      auto node = new Node(b,evaluate_board(b),white_);
-      construct_tree(*node, d, white_);
-      std::cout << "minmax: " << compute_minmax(node, d, white_) << "\n";
-      auto l = b.get_bot_legal_moves(white_);
-      auto it = l.cbegin();
-      if(!white_)
-        std::advance(it, node->get_index_max_val());
-      else
-          std::advance(it, node->get_index_min_val());
-      board.move(it->first.second * 8 + it->first.first,
-                 it->second.first + 8 * it->second.second);
-      board.print_board();
-      return true;
+        int d = 2;
+        Board b(board);
+        auto node = new Node(evaluate_board(b), white_);
+        std::cout << "\nconstruct tree: \n";
+        construct_tree(*node, d, white_, b);
+        //print_tree(node);
+        std::cout << "minmax: " << compute_minmax(node,d,white_) << "\n";
+        auto l = b.get_bot_legal_moves(white_);
+        auto it = l.cbegin();
+        if(!white_)
+            std::advance(it, node->get_index_max_val());
+        else
+            std::advance(it, node->get_index_min_val());
+        board.move(it->first.second * 8 + it->first.first,
+                   it->second.first + 8 * it->second.second);
+        delete node;
+        board.print_board();
+        return true;
     }
 
     void Bot::set_compute(int c) {

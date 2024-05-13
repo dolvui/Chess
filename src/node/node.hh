@@ -5,10 +5,10 @@
 namespace game {
     class Node {
     public:
-      Node(Board &board, float heur, bool white);
+      Node(float heur, bool white);
         void add_child(Node* node);
         float get_value();
-        Board& get_board();
+        std::pair<std::pair<int, int>, std::pair<int, int>> get_move();
         std::vector<Node *> get_childs();
         void set_minmax_value(float val);
         float get_minmax_value();
@@ -17,9 +17,9 @@ namespace game {
     private:
         float value_;
         std::vector<Node*> nodes_;
-        Board &board_;
         bool white_;
         float minmax_val;
+        std::pair<std::pair<int, int>, std::pair<int, int>> move_;
     };
 } // namespace game
 

@@ -16,7 +16,7 @@ namespace game
         bool compute_heuristic(Board &board, bool white);
         bool minmax(Board &board);
         void set_compute(int c);
-        void construct_tree(Node &node, int depth, bool white);
+        void construct_tree(Node &node, int depth, bool white,Board& board);
       private:
         int compute_ = 0;
     //     std::string name_;
