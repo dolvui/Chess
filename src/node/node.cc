@@ -1,30 +1,20 @@
 #include "node.hh"
+#include "../game/board/move.hh"
 
 namespace game {
-    Node::Node(float heur, bool white)
-        : value_(heur), white_(white),
+    Node::Node(float heur, bool white,Move* move)
+        : value_(heur), white_(white),move_(move),
           nodes_(std::vector<Node *>()){};
 
     void Node::add_child(Node *node) { nodes_.push_back(node); }
 
-    int Node::get_index_max_val() {
-        int m = 0;
-        float max = nodes_[0]->get_minmax_value();
+    Move* Node::get_index_best_val() {
+        float best = nodes_[0]->get_minmax_value();
+        Move* m = nodes_[0]->get_move();
         for (int i = 0; i < nodes_.size(); i++) {
-            if (nodes_[i]->get_minmax_value() > max) {
-                max = nodes_[i]->get_minmax_value();
-                m = i;
-            }
-        }
-        return m;
-    }
-    int Node::get_index_min_val() {
-        int m = 0;
-        float min = nodes_[0]->get_minmax_value();
-        for (int i = 0; i < nodes_.size(); i++) {
-            if (nodes_[i]->get_minmax_value()< min) {
-                min = nodes_[i]->get_minmax_value();
-                m = i;
+          if (nodes_[i]->get_minmax_value() > best) {
+                best = nodes_[i]->get_minmax_value();
+                m = nodes_[i]->get_move();
             }
         }
         return m;
