@@ -41,7 +41,7 @@ namespace game {
                 eval += p->get_value() * (p->is_white() ^ white_? -1 : 1);
             }
         }
-        return (eval + (float)M) * (white_? 1 : -1);
+        return (eval + (float)M) * (white_? 1 : - 1);
     }
 
     float compute_minmax(Node* node, int depth, bool white) {

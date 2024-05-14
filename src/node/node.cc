@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "node.hh"
 #include "../game/board/move.hh"
 
@@ -12,11 +14,23 @@ namespace game {
         float best = nodes_[0]->get_minmax_value();
         Move* m = nodes_[0]->get_move();
         for (int i = 0; i < nodes_.size(); i++) {
-          if (nodes_[i]->get_minmax_value() > best) {
-                best = nodes_[i]->get_minmax_value();
-                m = nodes_[i]->get_move();
-            }
+          std::cout << nodes_[i]->get_minmax_value() << " ";
+
+          if (white_) {
+              if (nodes_[i]->get_minmax_value() > best) {
+                  best = nodes_[i]->get_minmax_value();
+                  m = nodes_[i]->get_move();
+              }
+          }
+          else {
+              if (nodes_[i]->get_minmax_value() < best) {
+                  best = nodes_[i]->get_minmax_value();
+                  m = nodes_[i]->get_move();
+              }
+          }
+
         }
+        std::cout << "\n";
         return m;
     }
 }
