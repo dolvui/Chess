@@ -98,19 +98,17 @@ namespace game {
     }
 
     float Bot::compute_alphabeta_test(Node *node,int depth,Board board,
-                                 bool white,float alpha,float beta)
+                                 bool turn,float alpha,float beta)
     {
         if (depth == 0)
           return node->get_value();
-        const auto m = board.get_bot_legal_moves(white);
+        const auto m = board.get_bot_legal_moves(turn);
         if (m.size() == 0)
             return node->get_value();
 
-        float value;
-        if (white)
+        if (turn ^ white_)
         {
-            value = MIN_FLOAT;
-
+            float value = MIN_FLOAT;
             for (auto move = m.cbegin(); move != m.cend(); move++) {
                 Board b(board);
                 int start = move->first.second * 8 + move->first.first;
@@ -119,12 +117,12 @@ namespace game {
                 if (rt != 0)
                     continue;
                 float cur_heur = evaluate_board(b);
-                Move* m = new Move('C',white,start,end,false,false);
-                auto node_child = new Node(cur_heur, white,m);
+                Move* m = new Move('C',turn,start,end,false,false);
+                auto node_child = new Node(cur_heur, turn,m);
                 node->add_child(node_child);
                 value = std::max(value,
                                  compute_alphabeta_test(node_child, depth - 1,
-                                                        b,!white, alpha, beta));
+                                                        b,!turn, alpha, beta));
             }
             node->set_minmax_value(value);
             return value;
@@ -139,12 +137,12 @@ namespace game {
                     continue;
                 float cur_heur = evaluate_board(b);
 
-                Move* m = new Move('C',white,start,end,false,false);
-                auto node_child = new Node(cur_heur, white,m);
+                Move* m = new Move('C',turn,start,end,false,false);
+                auto node_child = new Node(cur_heur, turn,m);
                 node->add_child(node_child);
                 value = std::min(
                     value, compute_alphabeta_test(node_child, depth - 1
-                                                  ,b,!white,alpha, beta));
+                                                  ,b,!turn,alpha, beta));
             }
             node->set_minmax_value(value);
             return value;
@@ -163,7 +161,7 @@ namespace game {
     }
 
     bool Bot::minmax(Board &board) {
-        int d = 2;
+        int d = compute_;
         Board b(board);
         auto node = new Node(evaluate_board(b), white_, nullptr);
 

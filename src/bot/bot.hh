@@ -18,7 +18,7 @@ namespace game
         void set_compute(int c);
         void construct_tree(Node &node, int depth, bool white, Board &board);
         float compute_alphabeta_test(Node *node,int depth,Board board,
-                                     bool white,float alpha,float beta);
+                                     bool turn,float alpha,float beta);
       private:
         int compute_ = 0;
     //     std::string name_;

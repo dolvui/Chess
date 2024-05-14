@@ -15,6 +15,10 @@ mostly 64-40-20-10-1
 
 make -B && ./chess
 
+> [!NOTE]
+> add option: `Usage: ./chess [--mode <mode>] [--depth <depth>]`
+
+
 ## NOTATION
 
 pawn:
@@ -95,7 +99,10 @@ The current bot use a basic heuristic formula [see](https://www.chessprogramming
 
 All wrapped in a tree
 
-,for now none opti are done and a depth of 4 is deadly , so for now some testing , add some parameter and basic optimistion in tree logic and computation
+it seems working pretty well after some opti,
+the minmax is on a good road, just add the alphabeta to be more accurate
+
+after that ,the compute of the heuristic and minmaxAB's optimization is the only right path to follow
 
 ### add prom moves for futur bots
 

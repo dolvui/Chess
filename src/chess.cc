@@ -17,11 +17,12 @@
 int main(int argc, char *argv[]) {
 
     int mode = 0;
-
+    int depth = 2;
 
     option longopts[] = {
-        {"mode", required_argument, NULL, 'm'},
-        {"help", no_argument, NULL, 'h'}, {0}};
+      {"mode", required_argument, NULL, 'm'},
+      {"depth", required_argument, NULL, 'd'},
+      {"help", no_argument, NULL, 'h'},{0}};
 
     while (1) {
         const int opt = getopt_long(argc, argv, "mh::", longopts, 0);
@@ -31,12 +32,16 @@ int main(int argc, char *argv[]) {
 
         switch (opt) {
         case 'm':
-            mode =  4;
+            mode =  atoi(optarg);
 //          std::cout << optarg;
-          break;
+            break;
+        case 'd':
+            depth =  atoi(optarg);
+//          std::cout << optarg;
+            break;
         case 'h':
         default:
-          std::cout << "\nUsage: ./chess [-m <mode>]\n";
+          std::cout << "\nUsage: ./chess [--mode <mode>] [--depth <depth>]\n";
           break;
         }
     }
@@ -71,7 +76,7 @@ int main(int argc, char *argv[]) {
     }
     else {
       white_bot = new game::Bot("Victor", true);
-      white_bot->set_compute(2);
+      white_bot->set_compute(depth);
     }
 
     if (mode % 2 == 1) {
@@ -81,7 +86,7 @@ int main(int argc, char *argv[]) {
     }
     else {
       black_bot = new game::Bot("Vivi", false);
-      black_bot->set_compute(2);
+      black_bot->set_compute(depth);
     }
 
     auto g = game::Game(b,white_player,black_player,white_bot,black_bot);
