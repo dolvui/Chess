@@ -16,21 +16,25 @@ namespace game {
         for (int i = 0; i < nodes_.size(); i++) {
           std::cout << nodes_[i]->get_minmax_value() << " ";
 
-          if (white_) {
-              if (nodes_[i]->get_minmax_value() > best) {
+          if (nodes_[i]->get_minmax_value() > best) {
                   best = nodes_[i]->get_minmax_value();
                   m = nodes_[i]->get_move();
-              }
           }
-          else {
-              if (nodes_[i]->get_minmax_value() < best) {
-                  best = nodes_[i]->get_minmax_value();
-                  m = nodes_[i]->get_move();
-              }
-          }
+          // if (!white_) {
+          //     if (nodes_[i]->get_minmax_value() > best) {
+          //         best = nodes_[i]->get_minmax_value();
+          //         m = nodes_[i]->get_move();
+          //     }
+          // }
+          // else {
+          //     if (nodes_[i]->get_minmax_value() < best) {
+          //         best = nodes_[i]->get_minmax_value();
+          //         m = nodes_[i]->get_move();
+          //     }
+          // }
 
         }
-        std::cout << "\n";
+        std::cout << "\nbest: " << best<< "\n";
         return m;
     }
 }

@@ -102,6 +102,7 @@ All wrapped in a tree
 it seems working pretty well after some opti,
 the minmax is on a good road, just add the alphabeta to be more accurate
 
+-I think the minmax algoritm is working after some tweaks
 after that ,the compute of the heuristic and minmaxAB's optimization is the only right path to follow
 
 ### add prom moves for futur bots
