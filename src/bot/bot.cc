@@ -43,7 +43,7 @@ namespace game {
                 eval += p->get_value() * (!(p->is_white()^ turn)? 1 : -1);
             }
         }
-        return (eval + (float)M) * (turn? 1 : -1);
+        return (eval + (float)M);// * (turn? 1 : -1);
     }
 
     float Bot::compute_AB(Node *node, int d, bool turn, Board board,
@@ -52,7 +52,7 @@ namespace game {
           return node->get_value();
         const auto m = board.get_bot_legal_moves(turn);
         if (m.size() == 0)
-          return MAX_FLOAT;
+           return node->get_value();
 
         float value = MIN_FLOAT;
 

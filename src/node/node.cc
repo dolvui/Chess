@@ -18,7 +18,7 @@ namespace game {
       for (int i = 0; i < nodes_.size(); i++) {
           //std::cout << nodes_[i]->get_minmax_value() << " ";
 
-          // if (nodes_[i]->get_minmax_value() <  best) {
+          // if (nodes_[i]->get_minmax_value() >  best) {
           //     best = nodes_[i]->get_minmax_value();
           //     m = nodes_[i]->get_move();
           // }
