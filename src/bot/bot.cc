@@ -1,7 +1,9 @@
 #include "bot.hh"
 #include <cstdlib>
 #include <ctime>
+#include <fstream>
 #include <iostream>
+#include <sstream>
 #include <iterator>
 #include <unistd.h>
 #include <limits>
@@ -33,149 +35,97 @@ namespace game {
 
     float Bot::evaluate_board(Board &board,bool turn) {
         float eval = 0;
-        int M = 0.2 * (float)(board.get_bot_legal_moves(turn).size() -
-                 board.get_bot_legal_moves(!turn).size());
+        float M = 1.5 * (float)(board.get_bot_legal_moves(turn).size() -
+                                (float)board.get_bot_legal_moves(!turn).size());
 
         for (auto p : board.get_board_()) {
             if (p) {
-                eval += p->get_value() * (!(p->is_white() ^ turn)? 1 : -1);
+                eval += p->get_value() * (!(p->is_white()^ turn)? 1 : -1);
             }
         }
-        return (eval + (float)M) * (white_ ^ turn? -1 : 1);
+        return (eval + (float)M) * (turn? 1 : -1);
     }
 
-    float compute_alphabeta(Node *node,
-                            bool white,float alpha,float beta) {
-        if(node->get_childs().size() == 0)
+    float Bot::compute_AB(Node *node, int d, bool turn, Board board,
+                          float alpha, float beta) {
+        if (d == 0)
           return node->get_value();
-        float value;
-        if (white)
-        {
-            value = std::numeric_limits<float>::min();
-            for (auto child : node->get_childs()) {
-              value = std::max(value, compute_alphabeta(child,
-                                                        white, alpha, beta));
-              if (beta <= value) {
-                  node->set_minmax_value(value);
-                  return value;
-              }
-              alpha = std::max(alpha,value);
+        const auto m = board.get_bot_legal_moves(turn);
+        if (m.size() == 0)
+          return MAX_FLOAT;
+
+        float value = MIN_FLOAT;
+
+        for (auto move = m.cbegin(); move != m.cend(); move++) {
+            Board b(board);
+            int start = move->first.second * 8 + move->first.first;
+            int end = move->second.second * 8 + move->second.first;
+            int rt = b.move(start,end);
+            if (rt != 0)
+                continue;
+            float cur_heur = evaluate_board(b, turn);
+            Move* m = new Move('C',turn,start,end,false,false);
+            auto node_child = new Node(cur_heur, turn,m);
+            node->add_child(node_child);
+
+
+            value = std::max(
+                value,compute_AB(node_child, d - 1, !turn, b, -beta, -alpha));
+            if (value == MIN_FLOAT)
+                value = node->get_value();
+            if (value >= beta) {
+                node->set_minmax_value(value);
+                return value;
             }
-        } else {
-            float value = std::numeric_limits<float>::max();
-            for (auto child : node->get_childs()) {
-              value = std::min(value, compute_alphabeta(child, !white,
-                                                        alpha, beta));
-              if (alpha >= value) {
-                  node->set_minmax_value(value);
-                  return value;
-              }
-              beta = std::min(beta,value);
-            }
+            alpha = std::max(alpha,value);
         }
+        if (value == MIN_FLOAT)
+            value = node->get_value();
         node->set_minmax_value(value);
         return value;
     }
 
-    float Bot::compute_alphabeta_test(Node *node,int depth,Board board,
-                                 bool turn,float alpha,float beta)
-    {
-        if (depth == 0)
-          return node->get_value();
-        const auto m = board.get_bot_legal_moves(turn);
-        if (m.size() == 0)
-            return node->get_value();
+    void _tree_print(Node *n, Node *p, std::ofstream *fout) {
+        if (n == nullptr) // rien
+            return;
 
-        // turn | white_ | R
-        //  0   | 0      | 1
-        //  0   | 1      | 0
-        //  1   | 0      | 0
-        //  1   | 1      | 1
-        float value = 0;
-        if (!(turn ^ white_))
-        {
-            value = MIN_FLOAT;
-            for (auto move = m.cbegin(); move != m.cend(); move++) {
-                Board b(board);
-                int start = move->first.second * 8 + move->first.first;
-                int end = move->second.second * 8 + move->second.first;
-                int rt = b.move(start,end);
-                if (rt != 0)
-                    continue;
-                float cur_heur = evaluate_board(b,turn);
-                Move* m = new Move('C',turn,start,end,false,false);
-                auto node_child = new Node(cur_heur, turn,m);
-                node->add_child(node_child);
-                value = std::max(value,
-                                 compute_alphabeta_test(node_child, depth - 1,
-                                                        b, !turn, alpha, beta));
-                // if (value >= beta) {
-                //     node->set_minmax_value(value);
-                //     return value;
-                // }
-                // alpha = std::max(alpha,value);
-            }
-            node->set_minmax_value(value);
-            return value;
+        if (n->get_move() == nullptr) {  //no move -> start first node
+            *fout << (long)n << " [label=<start>]"
+                  << ";" << std::endl;
         } else {
-            float value = MAX_FLOAT;
-            for (auto move = m.cbegin(); move != m.cend(); move++) {
-                Board b(board);
-                int start = move->first.second * 8 + move->first.first;
-                int end = move->second.second * 8 + move->second.first;
-                int rt = b.move(start,end);
-                if (rt != 0)
-                    continue;
-                float cur_heur = evaluate_board(b,turn);
-
-                Move* m = new Move('C',turn,start,end,false,false);
-                auto node_child = new Node(cur_heur, turn,m);
-                node->add_child(node_child);
-                value = std::min(value,
-                                 compute_alphabeta_test(node_child, depth - 1,
-                                                        b, !turn, alpha, beta));
-                // if (value <= alpha) {
-                //     node->set_minmax_value(value);
-                //     return value;
-                // }
-                // beta = std::min(beta,value);
-            }
-            node->set_minmax_value(value);
-            return value;
+                *fout << (long)n << " [label=<"
+                      << n->get_minmax_value() << ">]"
+                      << ";" << std::endl;
+                *fout << (long)p << "->" << (long)n << ";"<<std::endl;
         }
-        // node->set_minmax_value(value);
-        // return value;
-    }
-
-    void print_tree(Node* node,int depth = 0) {
-        if (!node) return;
-        for (int i = 0; i < depth; ++i) {
-            std::cout << "  ";
-        }
-        std::cout << node->get_value() << std::endl;
-        for (auto child : node->get_childs()) {
-            print_tree(child, depth + 1);
+        for (auto c : n->get_childs()) {
+            _tree_print(c,n,fout);
         }
     }
 
+    void tree_print(Node *n) {
+      char filename[] = "save.gv";
+      std::ofstream fout(filename);
+      fout << "digraph G {\n";
+      _tree_print(n,nullptr,&fout);
+      fout << "\n}\n";
+    }
     bool Bot::minmax(Board &board) {
         int d = compute_;
         Board b(board);
         auto node = new Node(evaluate_board(b,white_), white_, nullptr);
 
-        std::cout << "\nconstruct tree: \n";
-        std::cout << "\nalphabeta:";
-        std::cout << " "
-                  << compute_alphabeta_test(node, d, board, white_,
-                                            MIN_FLOAT,
-                                            MAX_FLOAT)
-        << "\n";
+        compute_AB(node, d, white_,board,MIN_FLOAT,MAX_FLOAT);
         // print_tree(node);
-
+        tree_print(node);
         Move *best = node->get_index_best_val();
+        if (best == nullptr)
+          return false;
+        sleep(1);
         board.move(best->start_,best->end_);
         delete node;
         board.print_board();
+//        sleep(1);
         return true;
     }
 

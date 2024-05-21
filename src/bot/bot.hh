@@ -16,6 +16,7 @@ namespace game
         bool compute_heuristic(Board &board, bool white);
         bool minmax(Board &board);
         void set_compute(int c);
+        float compute_AB(Node *node,int d ,bool turn,Board board,float alpha, float beta);
         void construct_tree(Node &node, int depth, bool white, Board &board);
         float compute_alphabeta_test(Node *node,int depth,Board board,
                                      bool turn,float alpha,float beta);

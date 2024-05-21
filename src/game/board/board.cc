@@ -40,7 +40,7 @@ namespace game
         board_.at(3) = p4;
 
 
-        auto p5 = new game::Kig('k', false, 4, 0, 200);
+        auto p5 = new game::Kig('k', false, 4, 0, 1);
         board_.at(4) = p5;
 
         auto p6 = new game::Bishop('b', false, 5, 0, 3);
@@ -75,7 +75,7 @@ namespace game
         board_.at(59) = pd;
 
 
-        auto pe = new game::Kig('K', true, 4, 7, 200);
+        auto pe = new game::Kig('K', true, 4, 7, 1);
         board_.at(60) = pe;
 
         auto pf = new game::Bishop('B', true, 5, 7, 3);
